@@ -1,3 +1,12 @@
+# ANTBOUND v0.23.1 — Spawn & Grass Hotfix
+
+## Fixed
+
+- Moved the bathroom player spawn and warm-pipe colony entrance outside the vanity collision radius.
+- Added regression checks ensuring the bathroom spawn and adjacent movement samples are clear.
+- Removed dark base-material multiplication that made instanced grass appear black.
+- Grass now uses a seeded approximately 80% green / 20% brown palette with varied hue, saturation, and lightness.
+
 # ANTBOUND v0.23.0 — Indoor Frontier
 
 ## Added

@@ -1,6 +1,8 @@
-# ANTBOUND v0.23.0 — Indoor Frontier
+# ANTBOUND v0.23.1 — Spawn & Grass Hotfix
 
 ANTBOUND now includes two selectable 3D maps: the overgrown yard and a weather-free bathroom frontier.
+
+This patch moves the bathroom player and allied entrance out of the vanity collision volume, and restores a visible natural grass palette with an approximately 80% green / 20% brown seeded distribution.
 
 ## Run locally
 

@@ -1,4 +1,4 @@
-# ANTBOUND v0.23.0 testing
+# ANTBOUND v0.23.1 testing
 
 ## Static and module checks
 
@@ -14,7 +14,7 @@ Open:
 
 Expected status:
 
-`v0.23.0 interface self-test passed`
+`v0.23.1 interface self-test passed`
 
 Then verify:
 
@@ -26,6 +26,7 @@ Then verify:
 6. Settings persistence and pincer edit mode.
 7. `ANTBOUND.diagnostics()` reports empty error lists.
 8. Grass diagnostics report authored count plus chunk and visible-count data.
+9. Grass palette reports a green ratio between 78% and 82%, with nonzero brown blades.
 
 ## Bathroom regression
 
@@ -35,7 +36,7 @@ Open:
 
 Expected status:
 
-`v0.23.0 map self-test passed`
+`v0.23.1 map self-test passed`
 
 Then verify:
 
@@ -47,6 +48,7 @@ Then verify:
 6. Puddles add forward slide while moving.
 7. Rival ants swarm near the baseboard entrance and the house spider remains active.
 8. The map selector returns to the yard cleanly.
+9. The player can move immediately from spawn in multiple directions.
 
 ## Performance checks
 
