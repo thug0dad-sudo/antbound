@@ -1,3 +1,25 @@
+# ANTBOUND v0.20.2 — Touch Controls
+
+## Added
+
+- Semi-transparent movement joystick positioned at the bottom left.
+- Dedicated bite, sprint, and interact buttons.
+- Expandable behavior menu for sense mode, camera switching, climbing, audio, and multiplayer.
+- Coarse-pointer detection with a `?touch=1` desktop preview option.
+- Accessible labels, hold states, and responsive layouts for short and narrow screens.
+
+## Changed
+
+- Touch dragging on the game canvas controls camera look without triggering an accidental bite.
+- Mouse capture is requested only for non-touch pointers.
+- Minimap placement adjusts upward when touch controls are visible.
+
+## Preserved
+
+- Desktop keyboard and mouse controls.
+- Offline Three.js startup repair.
+- Fixed-rate scheduler, chunk activation, and dense varied procedural grass.
+
 # ANTBOUND v0.20.1 — Launch Repair
 
 ## Fixed
@@ -16,4 +38,3 @@
 - Dense renderer-driven grass and ground detail.
 - Seeded thickets, natural paths, and varied grass dimensions and lean.
 - Existing underground, weather, combat, colony, minimap, and multiplayer-preparation systems.
-
