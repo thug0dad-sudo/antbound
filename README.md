@@ -1,60 +1,53 @@
-# ANTBOUND v0.22.0
+# ANTBOUND v0.23.0 — Indoor Frontier
 
-Storm & Tremor makes predator movement tactile, makes the weather visibly dangerous, marks the underground exit clearly, and substantially thickens the yard.
+ANTBOUND now includes two selectable 3D maps: the overgrown yard and a weather-free bathroom frontier.
 
-## Live build
-
-https://antbound-thug0dad-3216s-projects.vercel.app
-
-## Run
-
-From the directory containing this folder:
+## Run locally
 
 ```bash
-python3 -m http.server 8080 --directory ANTBOUND-v0.22.0
+python3 -m http.server 8080
 ```
 
-Open `http://localhost:8080`.
+Open `http://localhost:8080`. Three.js is bundled under `vendor/`, so no CDN is required.
 
-Three.js 0.166.1 is included under `vendor/`, so the game does not need CDN access. After entering the yard, click the game canvas once to capture the mouse. Click-and-drag remains available when pointer lock is unavailable.
+## Maps
 
-## Touch controls
+- **Overgrown yard:** dense varied grass, underground colony, storms, rival ants, flyers, predators, shelters, pheromones, and colony ecology.
+- **Bathroom:** tiled floor and walls, sink and vanity, toilet, tub, mirror, bath mat, trash can, toilet paper, pipes, puddles, hair and debris. Outdoor weather, flyers, underground tunnels, and yard predators are disabled.
 
-- Translucent movement joystick at bottom left
-- Push the joystick to its outer edge to sprint automatically
-- Drag anywhere outside the controls to look around
-- Joystick, touch look, and contextual actions own separate pointer IDs for reliable simultaneous input
-- Touch look is tracked at the window level, so another captured finger cannot interrupt it
-- Collect, deliver, enter, climb, and bite actions appear only when they are available
-- The bite action uses a pincer icon and fades while moving
-- The objective, status panels, and map fade while moving
-- Stamina appears below 72% and disappears again after fully recovering
-- Add `?touch=1` to the URL to preview touch controls on a desktop browser
-- Add `?touch=1&quality=smoke&autostart=1&selftest=interface` to run the built-in interface regression check
+Bathroom dangers include timed sink-drip impacts, slippery puddles, a warning-and-suction toilet flush, a house spider, and a rival baseboard colony.
 
-## Larger yard
+Direct links:
 
-- Playable radius increased from 110 to 150 world units
-- New outer colony entrances, shelters, paths, food sites, thickets, rocks, and plants
-- Predator patrol, flyer spawning, world bounds, and vegetation placement use the expanded radius
-- Local minimap is smaller and translucent while covering the nearby active area
+- `?map=yard`
+- `?map=bathroom`
 
-## Underground and weather
+## Mobile controls and settings
 
-- The surface exit at the underground hub has a luminous 3D beacon
-- A directional guide shows the exit bearing and distance
-- The minimap labels the underground exit
-- Nearby spider steps produce distance-scaled camera tremors and a restrained edge pulse
-- Thunderstorms combine rain, wind, repeated lightning flashes, and thunder audio
+- Use the bottom-left joystick to move; pushing it to the edge sprints.
+- Drag the world with another finger to look while continuing to move.
+- Context actions appear near usable objects or enemies.
+- Open the gear menu to adjust look sensitivity, invert Y, joystick dead zone, sprint threshold, pincer size and opacity, camera shake, reduced motion, render scale, and grass distance.
+- Choose **Move pincer** to drag the bite control to a comfortable position. Its normalized position is saved locally.
 
-## Preserved engine systems
+## Dense grass performance
 
-- Fixed-rate subsystem scheduler
-- Chunk-based simulation sleeping
-- Per-system timing and error telemetry
-- Renderer-only, GPU-instanced vegetation
-- Seeded grass thickets, paths, and varied blade height, width, lean, and rotation
-- Low preset: up to 24,000 grass instances
-- Medium preset: up to 56,000 grass instances
-- High preset: up to 88,000 grass instances
-- Ultra preset: up to 128,000 grass instances
+Grass remains GPU-instanced and renderer-only, but is now divided into seeded spatial chunks:
+
+- Near chunks render at full density.
+- Mid-distance chunks render roughly one third of their instances.
+- Far chunks are omitted.
+- LOD updates run about four times per second.
+- The Grass Distance setting scales the thresholds.
+- Emergency performance mode shortens distance rather than permanently destroying the authored density.
+
+Quality budgets remain up to 24,000 / 56,000 / 88,000 / 128,000 blades from Low through Ultra.
+
+## Diagnostics
+
+Run `ANTBOUND.diagnostics()` in the browser console. Errors and disabled subsystem lists should remain empty.
+
+Automated smoke URLs:
+
+- Yard: `?touch=1&quality=smoke&autostart=1&selftest=interface`
+- Bathroom: `?map=bathroom&touch=1&quality=smoke&autostart=1&selftest=map`

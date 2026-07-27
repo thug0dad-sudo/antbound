@@ -1,49 +1,60 @@
-# ANTBOUND v0.22.0 testing
+# ANTBOUND v0.23.0 testing
 
-## Launch
+## Static and module checks
 
-```bash
-cd ANTBOUND-v0.22.0
-python3 -m http.server 8080
-```
+1. Validate the inline JavaScript module and `engine/runtime.js`.
+2. Serve the extracted release over HTTP.
+3. Confirm `/`, `/vendor/three.module.js`, and `/engine/runtime.js` return HTTP 200.
 
-Open `http://localhost:8080`, select Medium, and choose **Enter the yard**.
+## Yard regression
 
-## Required checks
+Open:
 
-1. Confirm `vendor/three.module.js` and `engine/runtime.js` return HTTP 200.
-2. Confirm the overlay closes and the frame counter keeps advancing.
-3. Click the game canvas and confirm mouse look works; denied pointer lock must not stop the game.
-4. Confirm WASD movement, first/third-person switching, minimap rendering, and weather updates.
-5. Run `ANTBOUND.diagnostics()` and confirm `errors`, `subsystemErrors`, and `disabledSubsystems` are empty.
-6. Run `await ANTBOUND.stressTest(80)` and confirm frame advancement continues.
+`/?touch=1&quality=smoke&autostart=1&selftest=interface`
 
-## Touch checks
+Expected status:
 
-Open `http://localhost:8080/?touch=1`.
+`v0.23.0 interface self-test passed`
 
-1. Drag the bottom-left joystick through all directions and confirm movement follows it.
-2. Release the joystick and confirm the ant stops.
-3. Push the joystick to its outer edge and confirm sprint activates without a Run button.
-4. Keep the joystick held with one finger and drag the world with a second; confirm movement and camera look continue together.
-5. Release only the look finger and confirm joystick movement continues.
-6. Start looking again, release only the joystick finger, and confirm camera look continues.
-7. Approach food, an allied entrance, a climbable object, and an enemy; confirm the correct floating action appears for each.
-8. Move continuously and confirm the objective, status panels, and minimap fade.
-9. Drain stamina below 72% and confirm its meter appears; allow it to recover fully and confirm it hides.
-10. Move the look finger quickly beyond its starting area and confirm camera look remains active.
-11. Release or cancel each gesture and confirm only its own control stops.
-12. Verify the controls at 320×568, 768×1024, and desktop widths.
-13. Enter the underground colony and confirm the green exit beacon, directional guide, distance readout, and minimap EXIT marker all point toward the hub.
-14. Approach an enemy and confirm the contextual attack control uses the pincer icon and fades while moving.
-15. Move near the spider during patrol and pursuit; confirm footsteps produce subtle distant tremors and strong close tremors without shaking underground.
-16. Run `ANTBOUND.triggerStorm()` in the browser console and confirm rain, repeated lightning flashes, and thunder audio.
-17. Confirm the selected quality preset reports its intended grass count in `ANTBOUND.diagnostics().density.grass`.
+Then verify:
 
-## Automated validation
+1. Joystick movement and simultaneous one-finger look.
+2. Full-stick sprint and clean release.
+3. Context actions, pincer icon, and motion fade.
+4. Underground exit beacon and tunnel containment.
+5. Spider proximity tremors and weather presentation.
+6. Settings persistence and pincer edit mode.
+7. `ANTBOUND.diagnostics()` reports empty error lists.
+8. Grass diagnostics report authored count plus chunk and visible-count data.
 
-Open `http://localhost:8080/?touch=1&quality=smoke&autostart=1&selftest=interface`.
+## Bathroom regression
 
-The lower-left runtime status must read `v0.22.0 interface self-test passed`. The test covers two-finger movement/look, full-stick sprint, contextual interaction input, low/full stamina visibility, motion HUD state, the underground exit marker, the pincer icon, storm presentation hooks, dense-grass budgets, and the expanded world.
+Open:
 
-The packaged release was also tested from a clean extracted directory over local HTTP. Module requests returned HTTP 200, the start overlay closed, and the runtime advanced without uncaught page errors.
+`/?map=bathroom&touch=1&quality=smoke&autostart=1&selftest=map`
+
+Expected status:
+
+`v0.23.0 map self-test passed`
+
+Then verify:
+
+1. The sink, toilet, tub, walls, vanity, mirror, mat, trash can, paper roll, pipes, puddles, and debris are visible.
+2. Rain, lightning, thunder, outdoor wind, flyers, underground areas, antlion, bird, and centipede are absent.
+3. Players remain inside the tiled room boundary and cannot walk through fixture collision zones.
+4. Sink drips show a falling warning droplet and damage/knock back ants in the impact zone.
+5. The toilet ring warns before suction begins; suction is lethal only near the bowl.
+6. Puddles add forward slide while moving.
+7. Rival ants swarm near the baseboard entrance and the house spider remains active.
+8. The map selector returns to the yard cleanly.
+
+## Performance checks
+
+Test Low and Medium on a mobile-class device:
+
+1. Near grass remains visually dense.
+2. Mid-distance chunks reduce instance count.
+3. Far chunks are hidden.
+4. Moving rapidly across chunk boundaries does not stall or pop the simulation.
+5. Render Scale and Grass Distance apply immediately.
+6. A graphics-context recovery shortens distance without changing the authored grass count.
