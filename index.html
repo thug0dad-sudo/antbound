@@ -933,6 +933,7 @@ class TouchControls {
   }
   setContext(action) {
     if(!this.contextButton)return;
+    if(!action&&document.body.classList.contains('control-edit'))action={kind:'attack',label:'Move bite control'};
     this.contextKind=action?.kind||null;
     if(action?.kind==='attack')this.contextButton.innerHTML=`<svg class="pincer-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M15 25c-5-1-8-5-8-10 0-4 2-7 5-9 1 5 3 7 6 8M17 25c5-1 8-5 8-10 0-4-2-7-5-9-1 5-3 7-6 8M16 15v12M12 27h8"/></svg><span>${action.label}</span>`;
     else this.contextButton.textContent=action?.label||'';
@@ -976,7 +977,7 @@ class SettingsController{
     ];
     for(const [id,key,format] of this.fields){const el=root.querySelector('#'+id),out=root.querySelector('#out'+id.slice(3));if(!el)continue;el.value=APP_SETTINGS[key];if(out)out.textContent=format(APP_SETTINGS[key]);el.addEventListener('input',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:Number(el.value)};if(out)out.textContent=format(APP_SETTINGS[key]);this.applyLive();saveSettings();});}
     for(const [id,key] of [['setInvertY','invertY'],['setReducedMotion','reducedMotion']]){const el=root.querySelector('#'+id);if(!el)continue;el.checked=APP_SETTINGS[key];el.addEventListener('change',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:el.checked};this.applyLive();saveSettings();});}
-    this.button?.addEventListener('click',()=>this.open());
+    this.button?.addEventListener('click',()=>this.editing?this.toggleEdit():this.open());
     root.querySelector('#closeSettings')?.addEventListener('click',()=>this.close());
     root.querySelector('#editControls')?.addEventListener('click',()=>this.toggleEdit());
     root.querySelector('#resetSettings')?.addEventListener('click',()=>{APP_SETTINGS={...DEFAULT_SETTINGS};saveSettings();location.reload();});
@@ -984,7 +985,7 @@ class SettingsController{
   }
   open(){this.panel?.classList.add('open');if(game)game.state.paused=true;}
   close(){this.editing=false;document.body.classList.remove('control-edit');this.panel?.classList.remove('open');if(game)game.state.paused=false;saveSettings();}
-  toggleEdit(){this.editing=!this.editing;document.body.classList.toggle('control-edit',this.editing);this.panel?.classList.toggle('open',!this.editing);touchControls.setContext(this.editing?{kind:'attack',label:'Move bite control'}:null);if(!this.editing)this.open();}
+  toggleEdit(){this.editing=!this.editing;document.body.classList.toggle('control-edit',this.editing);this.panel?.classList.toggle('open',!this.editing);if(this.button){this.button.textContent=this.editing?'✓':'⚙';this.button.setAttribute('aria-label',this.editing?'Finish moving pincer':'Open settings');}touchControls.setContext(this.editing?{kind:'attack',label:'Move bite control'}:null);if(!this.editing)this.open();}
   applyLive(){applySettings();if(game){game.renderer.setPixelRatio(Math.min(devicePixelRatio,game.quality.pixelRatio*APP_SETTINGS.renderScale));game.world.grassDistanceScale=APP_SETTINGS.grassDistance;}}
 }
 
