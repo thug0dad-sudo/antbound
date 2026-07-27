@@ -4,7 +4,7 @@ Launch Repair preserves the v0.20 engine refactor and procedural overgrowth whil
 
 ## Live build
 
-https://antbound-qt9om4n01-thug0dad-3216s-projects.vercel.app
+https://antbound-thug0dad-3216s-projects.vercel.app
 
 ## Run
 
