@@ -1,3 +1,24 @@
+# ANTBOUND v0.20.4 — Multi-Touch Controls
+
+## Fixed
+
+- Moving with the joystick no longer blocks simultaneous touch-screen camera look.
+- Releasing the joystick no longer cancels an active look gesture.
+- Releasing a look gesture no longer resets joystick movement.
+- Extra touches can no longer steal an active joystick or action-button pointer.
+
+## Changed
+
+- Touch camera gestures are routed globally and ignore joystick, action, and overlay targets.
+- Joystick, look, mouse drag, and hold buttons now maintain independent pointer ownership.
+- Touch devices disable browser panning and overscroll while the game controls are active.
+
+## Preserved
+
+- Desktop mouse and keyboard controls.
+- Existing mobile layout and behavior buttons.
+- Scheduler, chunk activation, dense procedural vegetation, and gameplay systems.
+
 # ANTBOUND v0.20.3 — Touch Look
 
 ## Added

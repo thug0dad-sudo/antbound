@@ -1,9 +1,9 @@
-# ANTBOUND v0.20.3 testing
+# ANTBOUND v0.20.4 testing
 
 ## Launch
 
 ```bash
-cd ANTBOUND-v0.20.3
+cd ANTBOUND-v0.20.4
 python3 -m http.server 8080
 ```
 
@@ -24,14 +24,20 @@ Open `http://localhost:8080/?touch=1`.
 
 1. Drag the bottom-left joystick through all directions and confirm movement follows it.
 2. Release the joystick and confirm the ant stops.
-3. Hold **Run** while moving and confirm sprint activates.
-4. Press **Bite** and **Use** and confirm their queued actions fire once.
-5. Open **More** and test Sense, View, Climb, Sound, and Link.
-6. Drag the game world outside the controls horizontally and vertically; confirm yaw and pitch respond.
-7. Move the finger quickly beyond its starting area and confirm pointer capture keeps camera look active.
-8. Release or cancel the gesture and confirm the camera stops immediately without triggering a bite.
-9. Verify the controls at 320×568, 768×1024, and desktop widths.
+3. Keep the joystick held with one finger and drag the world with a second; confirm movement and camera look continue together.
+4. Release only the look finger and confirm joystick movement continues.
+5. Start looking again, release only the joystick finger, and confirm camera look continues.
+6. Hold **Run** while moving and confirm sprint activates.
+7. Press **Bite** and **Use** and confirm their queued actions fire once.
+8. Open **More** and test Sense, View, Climb, Sound, and Link.
+9. Move the look finger quickly beyond its starting area and confirm camera look remains active.
+10. Release or cancel each gesture and confirm only its own control stops.
+11. Verify the controls at 320×568, 768×1024, and desktop widths.
 
 ## Automated validation
 
-The packaged release was tested from a clean extracted directory over local HTTP. Module requests returned HTTP 200, the start overlay closed, and the runtime advanced without uncaught page errors.
+Open `http://localhost:8080/?touch=1&quality=smoke&autostart=1&selftest=multitouch`.
+
+The lower-left runtime status must read `v0.20.4 multi-touch self-test passed`. This check presses the joystick with pointer 701, looks with pointer 702, releases look while preserving movement, then releases movement independently.
+
+The packaged release was also tested from a clean extracted directory over local HTTP. Module requests returned HTTP 200, the start overlay closed, and the runtime advanced without uncaught page errors.
