@@ -1,9 +1,9 @@
-# ANTBOUND v0.21.0 testing
+# ANTBOUND v0.22.0 testing
 
 ## Launch
 
 ```bash
-cd ANTBOUND-v0.21.0
+cd ANTBOUND-v0.22.0
 python3 -m http.server 8080
 ```
 
@@ -34,11 +34,16 @@ Open `http://localhost:8080/?touch=1`.
 10. Move the look finger quickly beyond its starting area and confirm camera look remains active.
 11. Release or cancel each gesture and confirm only its own control stops.
 12. Verify the controls at 320×568, 768×1024, and desktop widths.
+13. Enter the underground colony and confirm the green exit beacon, directional guide, distance readout, and minimap EXIT marker all point toward the hub.
+14. Approach an enemy and confirm the contextual attack control uses the pincer icon and fades while moving.
+15. Move near the spider during patrol and pursuit; confirm footsteps produce subtle distant tremors and strong close tremors without shaking underground.
+16. Run `ANTBOUND.triggerStorm()` in the browser console and confirm rain, repeated lightning flashes, and thunder audio.
+17. Confirm the selected quality preset reports its intended grass count in `ANTBOUND.diagnostics().density.grass`.
 
 ## Automated validation
 
 Open `http://localhost:8080/?touch=1&quality=smoke&autostart=1&selftest=interface`.
 
-The lower-left runtime status must read `v0.21.0 interface self-test passed`. The test covers two-finger movement/look, full-stick sprint, contextual interaction input, low/full stamina visibility, motion HUD state, and the expanded world.
+The lower-left runtime status must read `v0.22.0 interface self-test passed`. The test covers two-finger movement/look, full-stick sprint, contextual interaction input, low/full stamina visibility, motion HUD state, the underground exit marker, the pincer icon, storm presentation hooks, dense-grass budgets, and the expanded world.
 
 The packaged release was also tested from a clean extracted directory over local HTTP. Module requests returned HTTP 200, the start overlay closed, and the runtime advanced without uncaught page errors.

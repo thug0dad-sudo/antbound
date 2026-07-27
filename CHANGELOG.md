@@ -1,3 +1,28 @@
+# ANTBOUND v0.22.0 — Storm & Tremor
+
+## Added
+
+- A luminous underground surface-exit beacon with a floating arrow, beam, pulsing floor ring, directional HUD guide, distance readout, and minimap label.
+- A pincer-shaped contextual bite control with an accessible text label.
+- Visible full-screen lightning flashes synchronized with thunder audio.
+- A subtle tremor vignette accompanying nearby spider footsteps.
+- A storm preview helper for runtime testing.
+
+## Changed
+
+- Spider footsteps now shake the camera whenever the moving spider is nearby, with distance, gait speed, and pursuit state controlling intensity.
+- The attack control becomes mostly transparent while the player is moving.
+- Thunderstorms now produce several lightning and thunder events rather than relying on a rare single strike.
+- Grass density increased to 24,000 on Low, 56,000 on Medium, 88,000 on High, and 128,000 on Ultra.
+
+## Fixed
+
+- Spider tremors no longer depend exclusively on the pursuit state.
+- Surface spider movement no longer shakes the camera while the player is underground.
+- A short emergence grace window prevents the spider from killing a fresh spawn before the player can orient or move.
+- Lightning flashes decay at the rendering rate instead of remaining bright for a full low-frequency weather tick.
+- Interface regression coverage now verifies the exit marker, pincer icon, storm presentation hooks, and dense-grass budgets.
+
 # ANTBOUND v0.21.0 — Immersive Interface
 
 ## Added
