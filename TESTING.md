@@ -1,4 +1,4 @@
-# ANTBOUND v0.23.1 testing
+# ANTBOUND v0.23.2 testing
 
 ## Static and module checks
 
@@ -14,7 +14,7 @@ Open:
 
 Expected status:
 
-`v0.23.1 interface self-test passed`
+`v0.23.2 interface self-test passed`
 
 Then verify:
 
@@ -36,7 +36,7 @@ Open:
 
 Expected status:
 
-`v0.23.1 map self-test passed`
+`v0.23.2 map self-test passed`
 
 Then verify:
 
@@ -60,3 +60,12 @@ Test Low and Medium on a mobile-class device:
 4. Moving rapidly across chunk boundaries does not stall or pop the simulation.
 5. Render Scale and Grass Distance apply immediately.
 6. A graphics-context recovery shortens distance without changing the authored grass count.
+
+## Grass and view settings
+
+1. Confirm nearby and distant grass is visibly green/brown in clear weather and storms.
+2. Confirm the interface self-test reports an 80% green / 20% brown palette and a color-safe grass material.
+3. Disable **Show crosshair**, close settings, and confirm the center marker disappears.
+4. Reload and confirm the crosshair preference persists.
+5. Select **Third person** and confirm the camera changes immediately.
+6. Reload, then switch back to **First person** and confirm both preferences persist.

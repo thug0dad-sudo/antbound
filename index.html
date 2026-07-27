@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
 <link rel="icon" href="data:," />
-<title>ANTBOUND v0.23.1 — Spawn & Grass Hotfix</title>
+<title>ANTBOUND v0.23.2 — Grass & View Controls</title>
   <style>
 :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10130c}canvas{display:block;touch-action:none;outline:none}.hidden{display:none!important}#hud{position:fixed;z-index:5;inset:0;pointer-events:none;color:#f5f1db;text-shadow:0 2px 5px #000;font-weight:650}.panel{background:rgba(17,20,12,.76);border:1px solid rgba(255,245,200,.22);backdrop-filter:blur(8px);border-radius:14px;padding:10px 13px;box-shadow:0 8px 28px #0007}#top{position:absolute;left:18px;right:18px;top:18px;display:flex;justify-content:space-between;gap:16px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#cbbf83;margin-bottom:4px}#objective{max-width:480px;font-size:14px}#missionTitle{color:#f2d86d;font-weight:900;margin-bottom:3px}#weatherLine{margin-top:7px;font-size:11px;color:#dfe7d1}#meters{min-width:285px;display:grid;gap:7px}.meter{display:grid;grid-template-columns:60px 1fr 38px;gap:7px;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.bar{height:7px;background:#25291d;border-radius:99px;overflow:hidden}.fill{height:100%;background:#d5bd59}.danger .fill{background:#d46445}.statusline{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #ffffff1f;padding-top:7px;font-size:10px;text-transform:uppercase;letter-spacing:.05em}.statusline b{color:#f0d467}.subline{font-size:10px;color:#ccc7aa;display:flex;gap:10px;flex-wrap:wrap}#crosshair{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px;border:1px solid #fff;border-radius:50%;box-shadow:0 0 8px #fff}#prompt{position:absolute;left:50%;bottom:20%;transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#080a06d9;border:1px solid #ffffff28;opacity:0;transition:.15s;font-size:13px}#safeNotice{position:absolute;left:18px;bottom:70px;max-width:350px;display:none;border-color:#8fd49b66;background:rgba(12,38,22,.82)}#safeNotice strong{color:#a8efaf;letter-spacing:.08em;text-transform:uppercase;font-size:11px}#safeText{margin-top:5px;color:#e1f3df;font-size:13px;line-height:1.4}#version{position:absolute;right:18px;bottom:18px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d8d0a9}.help{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#d8d0a9;white-space:nowrap}#overlay,#win,#lose{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#59603477,#050704f5);z-index:10;padding:24px;color:white}#win,#lose{display:none}.card{max-width:760px;background:#0b0d08ed;border:1px solid #e1d9a740;border-radius:26px;padding:32px;box-shadow:0 30px 80px #0008}h1{font-size:clamp(40px,8vw,78px);margin:0;line-height:.88;letter-spacing:-.05em}h1 span{display:block;font-size:.18em;letter-spacing:.25em;margin:16px 0 24px;color:#d8c469}p{color:#d7d5c8;line-height:1.55}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 18px;margin:20px 0;color:#cbc6aa;font-size:13px}.controls b{color:#fff}.startrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}button,select{pointer-events:auto;border:0;border-radius:999px;padding:13px 20px;font-weight:850;letter-spacing:.07em;text-transform:uppercase;background:#e0c85e;color:#1c1a0f;cursor:pointer}select{background:#24271c;color:#eee;border:1px solid #ffffff2b}#debug{position:absolute;left:18px;top:190px;white-space:pre;font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;display:none;max-width:360px}#networkBadge{color:#b9d8ff}#toast{position:absolute;left:50%;top:19%;transform:translateX(-50%);opacity:0;transition:.25s;padding:10px 15px;border-radius:999px;background:#0a0c08e8;border:1px solid #ffffff30;font-size:13px}body.underground #hud{color:#efe1cb}body.underground #crosshair{box-shadow:0 0 8px #d7b99c}@media(max-width:760px){#top{left:10px;right:10px;top:10px;flex-direction:column}.help{font-size:8px;bottom:10px}.card{padding:23px}.controls{grid-template-columns:1fr}#version{right:10px;bottom:31px}#safeNotice{left:10px;bottom:45px}}
 
@@ -96,6 +96,7 @@ body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
 @media(max-width:760px){#minimapWrap{width:96px!important;height:96px!important;right:8px!important;bottom:10px!important}#staminaMeter{top:10px;width:min(210px,58vw)}}
 @media(max-height:560px){body.touch-ui #minimapWrap{display:block!important;width:82px!important;height:82px!important}}
 
+.setting select{width:100%;border:1px solid rgba(255,245,200,.2);border-radius:10px;background:#24281d;color:#f4f2e6;padding:9px 10px;font:inherit}
 </style>
 </head>
 <body>
@@ -114,7 +115,7 @@ body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
   <div id="safeNotice" class="panel"><strong>Safe zone</strong><div id="safeText"></div></div>
   <div id="debug" class="panel"></div></div>
   <div class="help">WASD move · mouse look · E interact · Shift sprint · F senses · C camera · Space climb · M mute · ` debug · N network</div>
-  <div id="version">v0.23.1 · Spawn & Grass Hotfix</div>
+  <div id="version">v0.23.2 · Grass & View Controls</div>
 </div>
 
 <div id="minimapWrap" data-status="booting"><canvas id="minimap" width="320" height="320" aria-label="Circular yard minimap"></canvas><div id="mapLabel">Yard map</div></div>
@@ -140,15 +141,17 @@ body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
       <label class="setting">Grass distance <input id="setGrassDistance" type="range" min=".55" max="1.35" step=".05"><output id="outGrassDistance"></output></label>
       <label class="setting check"><input id="setInvertY" type="checkbox"> Invert vertical look</label>
       <label class="setting check"><input id="setReducedMotion" type="checkbox"> Reduced motion</label>
+      <label class="setting check"><input id="setCrosshair" type="checkbox"> Show crosshair</label>
+      <label class="setting">Camera view <select id="setCameraMode"><option value="first">First person</option><option value="third">Third person</option></select></label>
     </div>
     <div class="settingsActions"><button id="editControls" type="button">Move pincer</button><button id="resetSettings" class="secondary" type="button">Reset settings</button><button id="closeSettings" class="secondary" type="button">Done</button></div>
   </div>
 </div>
-<div id="overlay"><div class="card"><h1>ANTBOUND<span>Spawn & Grass Hotfix · v0.23.1</span></h1><p id="releaseSummary">Choose the overgrown yard or a dangerous weather-free bathroom frontier.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Pincers</b> Bite</span><span><b>E / Context</b> Interact</span><span><b>Full joystick</b> Sprint</span><span><b>Space / Context</b> Climb</span><span><b>C</b> Camera</span><span><b>F</b> Sensory view</span></div><div class="startrow"><button id="start">Enter map</button><label>Map <select id="mapSelect"><option value="yard">Overgrown yard</option><option value="bathroom">Bathroom</option></select></label><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
+<div id="overlay"><div class="card"><h1>ANTBOUND<span>Grass & View Controls · v0.23.2</span></h1><p id="releaseSummary">Choose the overgrown yard or a dangerous weather-free bathroom frontier.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Pincers</b> Bite</span><span><b>E / Context</b> Interact</span><span><b>Full joystick</b> Sprint</span><span><b>Space / Context</b> Climb</span><span><b>C</b> Camera</span><span><b>F</b> Sensory view</span></div><div class="startrow"><button id="start">Enter map</button><label>Map <select id="mapSelect"><option value="yard">Overgrown yard</option><option value="bathroom">Bathroom</option></select></label><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
 <div id="win"><div class="card"><h1>COLONY SECURED<span>THE LINE HOLDS</span></h1><p>You completed the available progression for this release.</p><button id="restartWin">Play again</button></div></div>
 <div id="lose"><div class="card"><h1>TAKEN<span>THE YARD IS HUNGRY</span></h1><p>A predator caught you outside shelter.</p><button id="restartLose">Try again</button></div></div>
 <noscript><div class="boot-error">JavaScript is required to run ANTBOUND.</div></noscript>
-<div id="runtimeStatus" aria-live="polite">v0.23.1 spawn and grass hotfix ready</div>
+<div id="runtimeStatus" aria-live="polite">v0.23.2 grass and view controls ready</div>
 
 <script type="module">
 let THREE;
@@ -175,8 +178,8 @@ try {
 // ---- config.js ----
 const ACTIVE_MAP=new URLSearchParams(location.search).get('map')==='bathroom'?'bathroom':'yard';
 const BUILD = Object.freeze({
-  version: 'v0.23.1',
-  label: 'Spawn & Grass Hotfix',
+  version: 'v0.23.2',
+  label: 'Grass & View Controls',
   level: 231,
   seed: 72831,
   simulationHz: 30,
@@ -220,13 +223,14 @@ const WORLD = Object.freeze({
 });
 
 const SETTINGS_KEY='antbound-settings-v1';
-const DEFAULT_SETTINGS=Object.freeze({sensitivity:1,invertY:false,deadzone:.22,sprintThreshold:.92,pincerSize:58,pincerOpacity:.76,pincerX:.5,pincerY:.82,cameraShake:1,reducedMotion:false,renderScale:1,grassDistance:1});
+const DEFAULT_SETTINGS=Object.freeze({sensitivity:1,invertY:false,deadzone:.22,sprintThreshold:.92,pincerSize:58,pincerOpacity:.76,pincerX:.5,pincerY:.82,cameraShake:1,reducedMotion:false,renderScale:1,grassDistance:1,crosshair:true,cameraMode:'first'});
 function loadSettings(){try{return{...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch{return{...DEFAULT_SETTINGS}}}
 let APP_SETTINGS=loadSettings();
 function saveSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(APP_SETTINGS))}catch{}}
 function applySettings(){
   const button=document.querySelector('#contextAction');
   if(button){button.style.width=`${APP_SETTINGS.pincerSize}px`;button.style.minWidth=`${APP_SETTINGS.pincerSize}px`;button.style.height=`${APP_SETTINGS.pincerSize}px`;button.style.minHeight=`${APP_SETTINGS.pincerSize}px`;button.style.left=`${clamp(APP_SETTINGS.pincerX,.12,.88)*100}%`;button.style.top=`${clamp(APP_SETTINGS.pincerY,.12,.88)*100}%`;button.style.bottom='auto';button.style.setProperty('--pincer-opacity',APP_SETTINGS.pincerOpacity);}
+  const crosshair=document.querySelector('#crosshair');if(crosshair)crosshair.style.display=APP_SETTINGS.crosshair?'':'none';
 }
 
 
@@ -257,7 +261,7 @@ function createGameState(){
     tick:0,
     time:0,
     quality:'high',
-    cameraMode:'first',
+    cameraMode:APP_SETTINGS.cameraMode==='third'?'third':'first',
     underground:false,
     currentEntrance:null,
     weather:{phase:'clear',timer:0,rain:0,wind:.75,darkness:0,mud:0,lightning:0},
@@ -446,7 +450,7 @@ class WorldBuilder{
   #paths(){for(const p of PATHS){const [ax,az,bx,bz]=p,segments=32,verts=[],indices=[];const dx=bx-ax,dz=bz-az,len=Math.hypot(dx,dz)||1,px=-dz/len,pz=dx/len;for(let i=0;i<=segments;i++){const t=i/segments,wobble=Math.sin(t*9+(ax+az)*.07)*.75+Math.sin(t*23+az*.04)*.22,cx=ax+dx*t+px*wobble,cz=az+dz*t+pz*wobble,half=1.35+Math.sin(t*13+ax)*.35;for(const side of [-1,1]){const x=cx+px*half*side,z=cz+pz*half*side;verts.push(x,terrainHeight(x,z)+.06,z);}}for(let i=0;i<segments;i++){const a=i*2;indices.push(a,a+2,a+1,a+1,a+2,a+3);}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geo.setIndex(indices);geo.computeVertexNormals();const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x64462d,roughness:1,polygonOffset:true,polygonOffsetFactor:-1}));mesh.receiveShadow=true;this.surfaceGroup.add(mesh);}}
   #grass(){
     const target=this.quality.grass,chunkSize=18,geo=new THREE.ConeGeometry(.052,1.8,5,1);geo.translate(0,.9,0);
-    const mat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.92,side:THREE.DoubleSide,vertexColors:true});
+    const mat=new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,vertexColors:true,toneMapped:false});
     mat.onBeforeCompile=shader=>{shader.uniforms.uTime={value:0};shader.uniforms.uWind={value:1};shader.vertexShader=`uniform float uTime;uniform float uWind;\n${shader.vertexShader}`.replace('#include <begin_vertex>',`#include <begin_vertex>\nfloat bladeY=clamp(position.y/1.8,0.0,1.0);float phase=instanceMatrix[3].x*.39+instanceMatrix[3].z*.27;float localSway=sin(uTime*.91+phase)*.11;float gust=sin(uTime*.19+phase*.17)*.105;float cross=cos(uTime*.37+phase*1.73)*.05;transformed.x+=(localSway+gust)*bladeY*bladeY*uWind;transformed.z+=cross*bladeY*bladeY*uWind;`);this.shaderRefs.push(shader);};
     mat.customProgramCacheKey=()=>BUILD.version+'chunked-grass';
     const buckets=new Map(),dummy=new THREE.Object3D(),palette={green:0,brown:0};let placed=0,attempts=0;
@@ -463,6 +467,8 @@ class WorldBuilder{
     }
     const chunks=[];
     for(const [key,items] of buckets){const [cx,cz]=key.split(',').map(Number),mesh=new THREE.InstancedMesh(geo,mat,items.length);for(let i=0;i<items.length;i++){mesh.setMatrixAt(i,items[i].matrix);mesh.setColorAt(i,items[i].color);}mesh.count=items.length;mesh.userData={baseCount:items.length,cx:(cx+.5)*chunkSize,cz:(cz+.5)*chunkSize,lod:'near'};mesh.castShadow=this.quality.shadows;mesh.receiveShadow=true;mesh.frustumCulled=true;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;this.surfaceGroup.add(mesh);chunks.push(mesh);}
+    const visibleColor=new THREE.Color();
+    for(const mesh of chunks){mesh.castShadow=false;mesh.receiveShadow=false;for(let i=0;i<mesh.count;i++){const seed=Math.abs((i*37+Math.round(mesh.userData.cx*11)+Math.round(mesh.userData.cz*17))%100),green=seed<80,jitter=(seed%13)/13;if(green)visibleColor.setRGB(.10+jitter*.12,.40+jitter*.32,.06+jitter*.10);else visibleColor.setRGB(.34+jitter*.24,.16+jitter*.14,.06+jitter*.06);mesh.setColorAt(i,visibleColor);}if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;}
     this.grass={count:placed,chunks,chunkSize,palette};this.grassDistanceScale=APP_SETTINGS.grassDistance;this.emergencyGrassScale=1;this.lastGrassLod=-Infinity;
   }
   updateGrassLod(player,time,force=false){this.updateBathroom(time);if(!this.grass?.chunks||(!force&&time-this.lastGrassLod<.22))return;this.lastGrassLod=time;const scale=(this.grassDistanceScale||1)*(this.emergencyGrassScale||1),near=28*scale,far=66*scale;let visibleCount=0;for(const mesh of this.grass.chunks){const d=Math.hypot(player.x-mesh.userData.cx,player.z-mesh.userData.cz),base=mesh.userData.baseCount;if(d<=near){mesh.visible=true;mesh.count=base;mesh.userData.lod='near';}else if(d<=far){mesh.visible=true;mesh.count=Math.max(1,Math.floor(base*.34));mesh.userData.lod='mid';}else{mesh.visible=false;mesh.count=0;mesh.userData.lod='far';}visibleCount+=mesh.count;}this.grass.visibleCount=visibleCount;}
@@ -976,17 +982,18 @@ class SettingsController{
       ['setGrassDistance','grassDistance',v=>Math.round(v*100)+'%'],
     ];
     for(const [id,key,format] of this.fields){const el=root.querySelector('#'+id),out=root.querySelector('#out'+id.slice(3));if(!el)continue;el.value=APP_SETTINGS[key];if(out)out.textContent=format(APP_SETTINGS[key]);el.addEventListener('input',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:Number(el.value)};if(out)out.textContent=format(APP_SETTINGS[key]);this.applyLive();saveSettings();});}
-    for(const [id,key] of [['setInvertY','invertY'],['setReducedMotion','reducedMotion']]){const el=root.querySelector('#'+id);if(!el)continue;el.checked=APP_SETTINGS[key];el.addEventListener('change',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:el.checked};this.applyLive();saveSettings();});}
+    for(const [id,key] of [['setInvertY','invertY'],['setReducedMotion','reducedMotion'],['setCrosshair','crosshair']]){const el=root.querySelector('#'+id);if(!el)continue;el.checked=APP_SETTINGS[key];el.addEventListener('change',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:el.checked};this.applyLive();saveSettings();});}
+    const cameraMode=root.querySelector('#setCameraMode');if(cameraMode){cameraMode.value=APP_SETTINGS.cameraMode;cameraMode.addEventListener('change',()=>{APP_SETTINGS={...APP_SETTINGS,cameraMode:cameraMode.value==='third'?'third':'first'};this.applyLive();saveSettings();});}
     this.button?.addEventListener('click',()=>this.editing?this.toggleEdit():this.open());
     root.querySelector('#closeSettings')?.addEventListener('click',()=>this.close());
     root.querySelector('#editControls')?.addEventListener('click',()=>this.toggleEdit());
     root.querySelector('#resetSettings')?.addEventListener('click',()=>{APP_SETTINGS={...DEFAULT_SETTINGS};saveSettings();location.reload();});
     this.applyLive();
   }
-  open(){this.panel?.classList.add('open');if(game)game.state.paused=true;}
+  open(){if(game){APP_SETTINGS={...APP_SETTINGS,cameraMode:game.state.cameraMode};const cameraMode=this.panel?.querySelector('#setCameraMode');if(cameraMode)cameraMode.value=APP_SETTINGS.cameraMode;}this.panel?.classList.add('open');if(game)game.state.paused=true;}
   close(){this.editing=false;document.body.classList.remove('control-edit');this.panel?.classList.remove('open');if(game)game.state.paused=false;saveSettings();}
   toggleEdit(){this.editing=!this.editing;document.body.classList.toggle('control-edit',this.editing);this.panel?.classList.toggle('open',!this.editing);if(this.button){this.button.textContent=this.editing?'✓':'⚙';this.button.setAttribute('aria-label',this.editing?'Finish moving pincer':'Open settings');}touchControls.setContext(this.editing?{kind:'attack',label:'Move bite control'}:null);if(!this.editing)this.open();}
-  applyLive(){applySettings();if(game){game.renderer.setPixelRatio(Math.min(devicePixelRatio,game.quality.pixelRatio*APP_SETTINGS.renderScale));game.world.grassDistanceScale=APP_SETTINGS.grassDistance;}}
+  applyLive(){applySettings();if(game){game.renderer.setPixelRatio(Math.min(devicePixelRatio,game.quality.pixelRatio*APP_SETTINGS.renderScale));game.world.grassDistanceScale=APP_SETTINGS.grassDistance;const mode=APP_SETTINGS.cameraMode==='third'?'third':'first';if(game.state.cameraMode!==mode){game.state.cameraMode=mode;game.cameraTransition=.28;}}}
 }
 
 const qs = selector => document.querySelector(selector);
@@ -1047,7 +1054,7 @@ function runInterfaceSelfTest(game) {
   const denseGrass=QUALITY_PRESETS.medium.grass>=56000&&QUALITY_PRESETS.ultra.grass>=128000;
   Object.assign(p,saved);document.body.classList.toggle('underground',Boolean(saved.underground));game.world.setUnderground(Boolean(saved.underground));game.refreshUi();
   const largerWorld=WORLD.radius===150&&game.sim.foods.some(f=>Math.hypot(f.x,f.z)>120);
-  const settingsReady=Boolean(qs('#settingsPanel')&&qs('#editControls')&&APP_SETTINGS&&typeof APP_SETTINGS.pincerX==='number'),grassLod=Array.isArray(game.world.grass.chunks)&&game.world.grass.chunks.length>3,palette=game.world.grass.palette||{},greenRatio=palette.green/(palette.green+palette.brown||1),grassPalette=greenRatio>=.78&&greenRatio<=.82&&palette.brown>0;
+  const settingsReady=Boolean(qs('#settingsPanel')&&qs('#editControls')&&qs('#setCrosshair')&&qs('#setCameraMode')&&APP_SETTINGS&&typeof APP_SETTINGS.pincerX==='number'),grassLod=Array.isArray(game.world.grass.chunks)&&game.world.grass.chunks.length>3,palette=game.world.grass.palette||{},greenRatio=palette.green/(palette.green+palette.brown||1),grassPalette=greenRatio>=.78&&greenRatio<=.82&&palette.brown>0&&game.world.grass.chunks.every(mesh=>mesh.material?.isMeshBasicMaterial&&!mesh.castShadow&&!mesh.receiveShadow);
   return{...inputResult,contextVisible,contextQueued,lowStaminaVisible,motionHidesHud,fullStaminaHidden,pincerIcon,pincerFadeRule,exitMarker,exitGuide,stormPresentation,denseGrass,largerWorld,settingsReady,grassLod,grassPalette,greenRatio,ok:inputResult.ok&&contextVisible&&contextQueued&&lowStaminaVisible&&motionHidesHud&&fullStaminaHidden&&pincerIcon&&pincerFadeRule&&exitMarker&&exitGuide&&stormPresentation&&denseGrass&&largerWorld&&settingsReady&&grassLod&&grassPalette};
 }
 

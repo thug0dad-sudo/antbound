@@ -1,4 +1,24 @@
-# ANTBOUND v0.23.1 — Spawn & Grass Hotfix
+# ANTBOUND v0.23.2 — Grass & View Controls
+
+## Fixed
+
+- Replaced the grass lighting material with a color-faithful material so the seeded 80% green / 20% brown palette remains visible in all weather and lighting.
+- Removed grass self-shadowing, which caused dense nearby blades to render as black silhouettes.
+
+## Added
+
+- Persistent **Show crosshair** setting.
+- Persistent **Camera view** selector for first-person and third-person play.
+- Settings menu camera choice applies immediately without restarting.
+
+## Preserved
+
+- Bathroom spawn and collider repair from v0.23.1.
+- Dense chunked grass, distance LOD, wind animation, mobile controls, maps, combat, weather, and underground navigation.
+
+---
+
+## v0.23.1 — Spawn & Grass Hotfix
 
 ## Fixed
 

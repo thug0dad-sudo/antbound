@@ -1,4 +1,10 @@
-# ANTBOUND v0.23.1 — Spawn & Grass Hotfix
+# ANTBOUND v0.23.2 — Grass & View Controls
+
+This release keeps the bathroom spawn fix and adds:
+
+- reliable green/brown grass rendering without dense self-shadowing
+- a persistent crosshair visibility toggle
+- a persistent first-person/third-person camera selector
 
 ANTBOUND now includes two selectable 3D maps: the overgrown yard and a weather-free bathroom frontier.
 
