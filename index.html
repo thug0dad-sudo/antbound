@@ -42,7 +42,7 @@ button.disabled,button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(
 #behaviorMenu .touchAction{width:48px;height:48px;font-size:7px;background:rgba(11,17,9,.74)}
 #lookHint{position:absolute;left:50%;bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);padding:7px 11px;border-radius:999px;background:rgba(8,13,7,.45);border:1px solid rgba(238,246,220,.2);color:rgba(241,247,231,.72);font:750 8px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity 240ms ease;backdrop-filter:blur(4px)}
 #contextAction{position:absolute;left:50%;bottom:max(34px,calc(env(safe-area-inset-bottom) + 34px));min-width:104px;max-width:min(68vw,260px);min-height:48px;transform:translate(-50%,12px) scale(.94);padding:0 18px;border-radius:999px;opacity:0;visibility:hidden;pointer-events:none;background:rgba(18,25,14,.72);color:#f5f7ea;border:1px solid rgba(238,246,220,.38);box-shadow:0 8px 28px rgba(0,0,0,.38);backdrop-filter:blur(6px);transition:opacity 150ms ease,transform 150ms ease,visibility 150ms;font:850 10px/1 system-ui;letter-spacing:.09em;text-transform:uppercase}
-#contextAction.visible{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+#contextAction.visible{opacity:var(--pincer-opacity,1);visibility:visible;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 #contextAction[data-kind="attack"]{background:rgba(126,56,39,.76);border-color:rgba(255,191,154,.6)}
 #contextAction[data-kind="interact"]{background:rgba(55,85,43,.78);border-color:rgba(178,234,157,.58)}
 #contextAction[data-kind="jump"]{background:rgba(50,72,86,.78);border-color:rgba(170,218,239,.58)}
@@ -70,6 +70,17 @@ body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden
 @media(max-height:560px){body.touch-ui #objective{display:none}body.touch-ui #meters{transform:scale(.86);transform-origin:top right}#moveStick{width:104px;height:104px}#actionDock{bottom:10px}body.touch-ui #minimapWrap{display:none!important}}
 @keyframes lookHintFade{to{opacity:0}}
 
+#settingsButton{position:fixed;z-index:260;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));width:44px;height:44px;padding:0;border-radius:50%;background:rgba(13,18,11,.62);color:#f3efd8;border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(6px);font-size:19px;transition:opacity 180ms ease}
+body.ui-in-motion #settingsButton{opacity:.18}
+#settingsPanel{position:fixed;z-index:500;inset:0;display:none;place-items:center;padding:16px;background:rgba(2,4,2,.72);color:#f4f2e6}
+#settingsPanel.open{display:grid}
+#settingsCard{width:min(620px,100%);max-height:min(760px,92vh);overflow:auto;border-radius:22px;padding:22px;background:rgba(13,17,11,.97);border:1px solid rgba(235,224,172,.28);box-shadow:0 24px 80px #000b}
+#settingsCard h2{margin:0 0 4px;font-size:25px}#settingsCard p{margin:0 0 18px;font-size:12px}
+.settingGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}.setting{display:grid;gap:6px;font-size:11px;letter-spacing:.04em}.setting output{color:#e7cf67}.setting input[type="range"]{width:100%;accent-color:#dfc75e}.setting.check{display:flex;align-items:center;gap:9px}.settingsActions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.settingsActions button{padding:11px 15px;font-size:10px}.settingsActions .secondary{background:#282c21;color:#eee;border:1px solid #ffffff24}
+body.control-edit #contextAction{visibility:visible!important;opacity:.95!important;pointer-events:auto!important;outline:2px dashed #f2dc73;transform:translate(-50%,-50%) scale(1)!important}
+body.control-edit #contextAction::after{content:'DRAG';position:absolute;top:-19px;left:50%;transform:translateX(-50%);font:900 8px system-ui;letter-spacing:.12em;color:#ffe889}
+@media(max-width:620px){.settingGrid{grid-template-columns:1fr}#settingsCard{padding:18px}}
+
 /* v0.21 immersive HUD overrides */
 #minimapWrap{width:118px!important;height:118px!important;right:14px!important;bottom:18px!important;padding:5px!important;opacity:.68!important;background:rgba(7,16,7,.58)!important;border:1px solid rgba(150,237,170,.48)!important;box-shadow:0 0 16px rgba(76,223,132,.18)!important;transition:opacity 220ms ease,transform 220ms ease!important}
 #minimapWrap::before{display:none!important}
@@ -79,7 +90,7 @@ body.touch-ui #objective,body.touch-ui #meters,body.touch-ui #safeNotice,body.to
 body.touch-ui.ui-in-motion:not(.ui-alert) #objective,body.touch-ui.ui-in-motion:not(.ui-alert) #meters,body.touch-ui.ui-in-motion #safeNotice,body.touch-ui.ui-in-motion #version{opacity:0;transform:translateY(-8px)}
 body.touch-ui.ui-in-motion #moveStick{opacity:.48}
 body.touch-ui.ui-in-motion #moveKnob{opacity:.72}
-body.touch-ui.ui-in-motion #contextAction[data-kind="attack"].visible{opacity:.28;transform:translate(-50%,5px) scale(.9)}
+body.touch-ui.ui-in-motion #contextAction[data-kind="attack"].visible{opacity:calc(var(--pincer-opacity,.76) * .36);transform:translate(-50%,-50%) scale(.9)}
 body.touch-ui #moveStick{transition:opacity 220ms ease}
 body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
 @media(max-width:760px){#minimapWrap{width:96px!important;height:96px!important;right:8px!important;bottom:10px!important}#staminaMeter{top:10px;width:min(210px,58vw)}}
@@ -113,6 +124,25 @@ body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
   <div id="moveStick" role="application" aria-label="Movement joystick"><div id="moveKnob"></div></div>
   <div id="lookHint" aria-hidden="true">Drag the world to look</div>
   <button id="contextAction" type="button" aria-live="polite" aria-label="Context action"></button>
+</div>
+<button id="settingsButton" type="button" aria-label="Open settings">⚙</button>
+<div id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div id="settingsCard">
+    <h2 id="settingsTitle">Settings</h2><p>Changes save automatically on this device.</p>
+    <div class="settingGrid">
+      <label class="setting">Look sensitivity <input id="setSensitivity" type="range" min=".45" max="2.2" step=".05"><output id="outSensitivity"></output></label>
+      <label class="setting">Joystick dead zone <input id="setDeadzone" type="range" min=".08" max=".42" step=".01"><output id="outDeadzone"></output></label>
+      <label class="setting">Sprint threshold <input id="setSprint" type="range" min=".72" max=".99" step=".01"><output id="outSprint"></output></label>
+      <label class="setting">Pincer size <input id="setPincerSize" type="range" min="46" max="86" step="2"><output id="outPincerSize"></output></label>
+      <label class="setting">Pincer opacity <input id="setPincerOpacity" type="range" min=".25" max="1" step=".05"><output id="outPincerOpacity"></output></label>
+      <label class="setting">Camera shake <input id="setShake" type="range" min="0" max="1" step=".05"><output id="outShake"></output></label>
+      <label class="setting">Render scale <input id="setRenderScale" type="range" min=".65" max="1.2" step=".05"><output id="outRenderScale"></output></label>
+      <label class="setting">Grass distance <input id="setGrassDistance" type="range" min=".55" max="1.35" step=".05"><output id="outGrassDistance"></output></label>
+      <label class="setting check"><input id="setInvertY" type="checkbox"> Invert vertical look</label>
+      <label class="setting check"><input id="setReducedMotion" type="checkbox"> Reduced motion</label>
+    </div>
+    <div class="settingsActions"><button id="editControls" type="button">Move pincer</button><button id="resetSettings" class="secondary" type="button">Reset settings</button><button id="closeSettings" class="secondary" type="button">Done</button></div>
+  </div>
 </div>
 <div id="overlay"><div class="card"><h1>ANTBOUND<span>Storm & Tremor · v0.22.0</span></h1><p id="releaseSummary">A denser living yard with tactile predator footsteps, violent storms, and a clearly marked route home.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Pincers</b> Bite</span><span><b>E / Context</b> Interact</span><span><b>Full joystick</b> Sprint</span><span><b>Space / Context</b> Climb</span><span><b>C</b> Camera</span><span><b>F</b> Sensory view</span></div><div class="startrow"><button id="start">Enter the yard</button><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
 <div id="win"><div class="card"><h1>COLONY SECURED<span>THE LINE HOLDS</span></h1><p>You completed the available progression for this release.</p><button id="restartWin">Play again</button></div></div>
@@ -188,6 +218,16 @@ const WORLD = Object.freeze({
   spiderClearance: 0.04,
 });
 
+const SETTINGS_KEY='antbound-settings-v1';
+const DEFAULT_SETTINGS=Object.freeze({sensitivity:1,invertY:false,deadzone:.22,sprintThreshold:.92,pincerSize:58,pincerOpacity:.76,pincerX:.5,pincerY:.82,cameraShake:1,reducedMotion:false,renderScale:1,grassDistance:1});
+function loadSettings(){try{return{...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch{return{...DEFAULT_SETTINGS}}}
+let APP_SETTINGS=loadSettings();
+function saveSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(APP_SETTINGS))}catch{}}
+function applySettings(){
+  const button=document.querySelector('#contextAction');
+  if(button){button.style.width=`${APP_SETTINGS.pincerSize}px`;button.style.minWidth=`${APP_SETTINGS.pincerSize}px`;button.style.height=`${APP_SETTINGS.pincerSize}px`;button.style.minHeight=`${APP_SETTINGS.pincerSize}px`;button.style.left=`${clamp(APP_SETTINGS.pincerX,.12,.88)*100}%`;button.style.top=`${clamp(APP_SETTINGS.pincerY,.12,.88)*100}%`;button.style.bottom='auto';button.style.setProperty('--pincer-opacity',APP_SETTINGS.pincerOpacity);}
+}
+
 
 // ---- math.js ----
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -248,8 +288,9 @@ class InputController{
       }
     };
     this.applyLook=(dx,dy,multiplier=1)=>{
-      this.yaw=(this.yaw+dx*.00205*multiplier)%(Math.PI*2);
-      this.pitch=clamp(this.pitch-dy*.0017*multiplier,-1.08,.8);
+      const sensitivity=APP_SETTINGS.sensitivity||1,ySign=APP_SETTINGS.invertY?-1:1;
+      this.yaw=(this.yaw+dx*.00205*multiplier*sensitivity)%(Math.PI*2);
+      this.pitch=clamp(this.pitch-dy*.0017*multiplier*sensitivity*ySign,-1.08,.8);
     };
     const normalize=c=>({ArrowUp:'KeyW',ArrowDown:'KeyS',ArrowLeft:'KeyA',ArrowRight:'KeyD',ShiftRight:'ShiftLeft'})[c]||c;
     addEventListener('keydown',e=>{const c=normalize(e.code);if(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','KeyF','KeyE','KeyC','KeyM','KeyN','Backquote','Space'].includes(c))e.preventDefault();this.keys.add(c);if(c==='KeyE'&&!e.repeat)this.interactQueued=true;if(c==='KeyC'&&!e.repeat&&performance.now()-this.cameraToggleAt>300){this.toggleCamera=true;this.cameraToggleAt=performance.now();}if(c==='Backquote'&&!e.repeat)this.toggleDebug=true;if(c==='KeyM'&&!e.repeat)this.toggleMute=true;if(c==='KeyN'&&!e.repeat)this.toggleNetwork=true;if(c==='Space'&&!e.repeat)this.jumpQueued=true;},{capture:true});
@@ -257,7 +298,7 @@ class InputController{
     addEventListener('blur',()=>this.keys.clear());
     document.addEventListener('visibilitychange',()=>{if(document.hidden)this.keys.clear();});
     canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;canvas.focus();this.dragging=true;this.mouseDragPointer=e.pointerId;this.lastX=e.clientX;this.lastY=e.clientY;if(e.button===0)this.attackQueued=true;this.requestPointerLock();});
-    const touchControlTarget=target=>target instanceof Element&&Boolean(target.closest('#moveStick,#contextAction,#overlay,#win,#lose,select'));
+    const touchControlTarget=target=>target instanceof Element&&Boolean(target.closest('#moveStick,#contextAction,#settingsButton,#settingsPanel,#overlay,#win,#lose,select'));
     const startTouchLook=e=>{
       if(e.pointerType!=='touch'||!document.body.classList.contains('touch-ui')||this.touchLookPointer!==null||touchControlTarget(e.target))return;
       e.preventDefault();
@@ -709,7 +750,7 @@ class Game{
     if(this.state.lost)document.querySelector('#lose').style.display='grid';if(FEATURES.missions&&this.state.missionIndex>=this.sim.missions.length){this.state.won=true;document.querySelector('#win').style.display='grid';}else if(this.state.won)document.querySelector('#win').style.display='grid';}
   #environment(time,dt){const w=this.state.weather;this.world.update(time,w,this.sim.player);if(w.lightning>.9&&!this.lightningLatched){this.lightningPulse=1;this.lightningLatched=true;}if(w.lightning<=0)this.lightningLatched=false;this.lightningPulse=Math.max(0,this.lightningPulse-dt*5.8);if(this.lightningEl)this.lightningEl.style.opacity=String(this.sim.player.underground?this.lightningPulse*.12:this.lightningPulse*.86);this.sun.position.x=-35+Math.sin(time*.045)*8;this.sun.position.z=20+Math.cos(time*.038)*6;this.sun.intensity=(3.12+.15*Math.sin(time*.11))*(1-w.darkness*.72)+this.lightningPulse*8;this.hemi.intensity=1.75*(1-w.darkness*.45)+this.lightningPulse*2.5;this.fill.intensity=.42*(1-w.darkness*.35);this.renderer.toneMappingExposure=(1.06+.02*Math.sin(time*.13))*(1-w.darkness*.32)+this.lightningPulse*.5;this.scene.fog.density=this.sim.player.underground?.024:(.0115+w.rain*.009);this.scene.background.set(this.sim.player.underground?0x17100c:0x9fb58d);this.undergroundLight.intensity=this.sim.player.underground?2.2:0;const near=nearestEntrance(this.sim.player.x,this.sim.player.z,'allied');this.audio.update({wind:w.wind,rain:w.rain,underground:this.sim.player.underground,nearColony:near.distance<12||this.sim.player.underground});if(this.sim.player.speed>1){this.stepTimer=(this.stepTimer||0)-dt;if(this.stepTimer<=0){this.audio.playerStep(this.input.keys.has('ShiftLeft'));this.stepTimer=this.input.keys.has('ShiftLeft')?.11:.17;}}}
   #camera(dt,time){this.cameraTransition=Math.max(0,this.cameraTransition-dt);const p=this.sim.player,rig=this.sim.playerRig;const horizontal=this.state.cameraMode==='first'?112:88;this.camera.fov+=(clamp(verticalFov(horizontal,this.camera.aspect),48,102)-this.camera.fov)*(1-Math.pow(.00008,dt));this.camera.updateProjectionMatrix();const y=p.underground?-8.75:terrainHeight(p.x,p.z)+.95+p.vertical,forward=new THREE.Vector3(Math.cos(p.yaw),0,Math.sin(p.yaw));if(this.state.cameraMode==='first'){rig.root.visible=false;this.fpRig.visible=true;const eye=new THREE.Vector3(p.x,y,p.z).addScaledVector(forward,.32);this.camera.position.lerp(eye,1-Math.pow(.00002,dt));this.camera.rotation.order='YXZ';this.camera.rotation.y=-p.yaw-Math.PI/2;this.camera.rotation.x=p.pitch;this.camera.rotation.z=0;for(const [i,a] of this.fpRig.children.entries()){a.rotation.y=Math.sin(time*2.5+i)*.06;a.rotation.x=Math.sin(time*3.1+i)*.02;}}else{rig.root.visible=true;this.fpRig.visible=false;const orbitPitch=clamp(p.pitch,-.48,.42),distance=9.6,horizontalDistance=Math.cos(orbitPitch)*distance;const desired=new THREE.Vector3(p.x,y+2.15+Math.sin(orbitPitch)*5.0,p.z).addScaledVector(forward,-horizontalDistance);if(!p.underground)desired.y=Math.max(desired.y,terrainHeight(desired.x,desired.z)+1.25);const follow=1-Math.pow(.00035,dt);this.camera.position.lerp(desired,follow);const look=new THREE.Vector3(p.x,y+.35,p.z).addScaledVector(forward,1.55);this.camera.up.set(0,1,0);this.camera.lookAt(look);}this.#shake(dt,time);}
-  #shake(dt,time){this.tremorPulse=Math.max(0,this.tremorPulse-dt*3.8);if(this.tremorEl)this.tremorEl.style.opacity=String(clamp(this.tremorPulse*.42,0,.42));if(this.shake.time<=0){this.shake.strength=0;return;}this.shake.time-=dt;this.shake.strength*=Math.pow(.018,dt);const s=this.shake.strength,phase=time*44+this.shake.phase;this.camera.position.x+=Math.sin(phase*1.13)*s*.22;this.camera.position.y+=Math.sin(phase*1.73)*s*.29;this.camera.position.z+=Math.cos(phase*.91)*s*.18;this.camera.rotation.x+=Math.sin(phase*.82)*s*.016;this.camera.rotation.z+=Math.cos(phase*1.31)*s*.022;}
+  #shake(dt,time){const shakeScale=APP_SETTINGS.reducedMotion?0:APP_SETTINGS.cameraShake;this.tremorPulse=Math.max(0,this.tremorPulse-dt*3.8);if(this.tremorEl)this.tremorEl.style.opacity=String(clamp(this.tremorPulse*.42*shakeScale,0,.42));if(this.shake.time<=0||shakeScale<=0){this.shake.strength=0;return;}this.shake.time-=dt;this.shake.strength*=Math.pow(.018,dt);const s=this.shake.strength*shakeScale,phase=time*44+this.shake.phase;this.camera.position.x+=Math.sin(phase*1.13)*s*.22;this.camera.position.y+=Math.sin(phase*1.73)*s*.29;this.camera.position.z+=Math.cos(phase*.91)*s*.18;this.camera.rotation.x+=Math.sin(phase*.82)*s*.016;this.camera.rotation.z+=Math.cos(phase*1.31)*s*.022;}
   #immersiveUi(){
     const p=this.sim.player,zone=this.sim.currentSafeZone(),spiderD=dist2(p.x,p.z,this.sim.spider.x,this.sim.spider.z),danger=zone?0:clamp((92-spiderD)/92*100,0,100);
     this.staminaHudVisible=p.stamina<72||(this.staminaHudVisible&&p.stamina<98);
@@ -792,11 +833,11 @@ class TouchControls {
       let dx=e.clientX-cx,dy=e.clientY-cy;
       const length=Math.hypot(dx,dy),strength=Math.min(1,length/max);
       if(length>max){dx=dx/length*max;dy=dy/length*max;}
-      const nx=dx/max,ny=dy/max,dead=.22;
+      const nx=dx/max,ny=dy/max,dead=APP_SETTINGS.deadzone;
       this.knob.style.transform=`translate3d(${dx}px,${dy}px,0)`;
       this.setKey('KeyA',nx<-dead);this.setKey('KeyD',nx>dead);
       this.setKey('KeyW',ny<-dead);this.setKey('KeyS',ny>dead);
-      this.setKey('ShiftLeft',strength>=.92);
+      this.setKey('ShiftLeft',strength>=APP_SETTINGS.sprintThreshold);
     };
     const end=e=>{
       if(this.stickPointer!==e.pointerId)return;
@@ -841,20 +882,54 @@ class TouchControls {
     else this.contextButton.textContent=action?.label||'';
     this.contextButton.dataset.kind=this.contextKind||'';
     this.contextButton.setAttribute('aria-label',action?.label||'Context action');
-    this.contextButton.classList.toggle('visible',Boolean(action));
+    this.contextButton.classList.toggle('visible',Boolean(action)||document.body.classList.contains('control-edit'));
   }
   bindButtons() {
+    let dragPointer=null;
     this.contextButton?.addEventListener('pointerdown',e=>{
       e.preventDefault();e.stopPropagation();
+      if(document.body.classList.contains('control-edit')){dragPointer=e.pointerId;try{this.contextButton.setPointerCapture?.(e.pointerId);}catch{}return;}
       if(this.contextKind==='attack')this.queue('attackQueued');
       else if(this.contextKind==='jump')this.queue('jumpQueued');
       else if(this.contextKind==='interact')this.queue('interactQueued');
       this.contextButton.classList.add('active');
     });
+    this.contextButton?.addEventListener('pointermove',e=>{
+      if(dragPointer!==e.pointerId||!document.body.classList.contains('control-edit'))return;
+      e.preventDefault();APP_SETTINGS={...APP_SETTINGS,pincerX:clamp(e.clientX/innerWidth,.12,.88),pincerY:clamp(e.clientY/innerHeight,.12,.88)};applySettings();
+    });
     const release=()=>this.contextButton?.classList.remove('active');
-    this.contextButton?.addEventListener('pointerup',release);
-    this.contextButton?.addEventListener('pointercancel',release);
+    const end=e=>{if(dragPointer===e.pointerId){dragPointer=null;saveSettings();}release();};
+    this.contextButton?.addEventListener('pointerup',end);
+    this.contextButton?.addEventListener('pointercancel',end);
   }
+}
+
+class SettingsController{
+  constructor(root=document){
+    this.panel=root.querySelector('#settingsPanel');this.button=root.querySelector('#settingsButton');this.editing=false;
+    this.fields=[
+      ['setSensitivity','sensitivity',v=>Number(v).toFixed(2)],
+      ['setDeadzone','deadzone',v=>Math.round(v*100)+'%'],
+      ['setSprint','sprintThreshold',v=>Math.round(v*100)+'%'],
+      ['setPincerSize','pincerSize',v=>Math.round(v)+' px'],
+      ['setPincerOpacity','pincerOpacity',v=>Math.round(v*100)+'%'],
+      ['setShake','cameraShake',v=>Math.round(v*100)+'%'],
+      ['setRenderScale','renderScale',v=>Math.round(v*100)+'%'],
+      ['setGrassDistance','grassDistance',v=>Math.round(v*100)+'%'],
+    ];
+    for(const [id,key,format] of this.fields){const el=root.querySelector('#'+id),out=root.querySelector('#out'+id.slice(3));if(!el)continue;el.value=APP_SETTINGS[key];if(out)out.textContent=format(APP_SETTINGS[key]);el.addEventListener('input',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:Number(el.value)};if(out)out.textContent=format(APP_SETTINGS[key]);this.applyLive();saveSettings();});}
+    for(const [id,key] of [['setInvertY','invertY'],['setReducedMotion','reducedMotion']]){const el=root.querySelector('#'+id);if(!el)continue;el.checked=APP_SETTINGS[key];el.addEventListener('change',()=>{APP_SETTINGS={...APP_SETTINGS,[key]:el.checked};this.applyLive();saveSettings();});}
+    this.button?.addEventListener('click',()=>this.open());
+    root.querySelector('#closeSettings')?.addEventListener('click',()=>this.close());
+    root.querySelector('#editControls')?.addEventListener('click',()=>this.toggleEdit());
+    root.querySelector('#resetSettings')?.addEventListener('click',()=>{APP_SETTINGS={...DEFAULT_SETTINGS};saveSettings();location.reload();});
+    this.applyLive();
+  }
+  open(){this.panel?.classList.add('open');if(game)game.state.paused=true;}
+  close(){this.editing=false;document.body.classList.remove('control-edit');this.panel?.classList.remove('open');if(game)game.state.paused=false;saveSettings();}
+  toggleEdit(){this.editing=!this.editing;document.body.classList.toggle('control-edit',this.editing);this.panel?.classList.toggle('open',!this.editing);touchControls.setContext(this.editing?{kind:'attack',label:'Move bite control'}:null);if(!this.editing)this.open();}
+  applyLive(){applySettings();if(game){game.renderer.setPixelRatio(Math.min(devicePixelRatio,game.quality.pixelRatio*APP_SETTINGS.renderScale));game.world.grassDistanceScale=APP_SETTINGS.grassDistance;}}
 }
 
 const qs = selector => document.querySelector(selector);
@@ -864,6 +939,7 @@ document.title = `ANTBOUND ${BUILD.version} — ${BUILD.label}`;
 const touchControls = new TouchControls();
 let game = null;
 let starting = false;
+const settingsController = new SettingsController();
 
 function runMultiTouchSelfTest(input) {
   const stick=qs('#moveStick'),canvas=input?.canvas;
@@ -954,7 +1030,7 @@ async function startGame() {
     const requested = new URLSearchParams(location.search).get('quality');
     const quality = requested || qs('#quality').value;
     runtimePreflight();
-    game = new Game(quality);window.ANTBOUND_GAME=game;touchControls.attach(game.input);
+    game = new Game(quality);window.ANTBOUND_GAME=game;touchControls.attach(game.input);settingsController.applyLive();
     qs('#overlay').style.display = 'none';
     game.start();
     const selftest=new URLSearchParams(location.search).get('selftest');
