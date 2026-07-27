@@ -1,6 +1,6 @@
-# ANTBOUND v0.20.2
+# ANTBOUND v0.20.3
 
-Touch Controls adds a responsive mobile control layer while preserving the v0.20 engine refactor, procedural overgrowth, and reliable local startup.
+Touch Look adds direct touch-screen camera control alongside the mobile joystick and behavior buttons while preserving the v0.20 engine refactor and procedural overgrowth.
 
 ## Live build
 
@@ -11,7 +11,7 @@ https://antbound-thug0dad-3216s-projects.vercel.app
 From the directory containing this folder:
 
 ```bash
-python3 -m http.server 8080 --directory ANTBOUND-v0.20.2
+python3 -m http.server 8080 --directory ANTBOUND-v0.20.3
 ```
 
 Open `http://localhost:8080`.
@@ -24,6 +24,7 @@ Three.js 0.166.1 is included under `vendor/`, so the game does not need CDN acce
 - Bite, run, and use buttons at bottom right
 - Expandable behavior menu for sense, camera, climb, sound, and multiplayer
 - Drag anywhere outside the controls to look around
+- Touch look uses pointer capture, so the camera continues tracking if a finger moves quickly
 - Add `?touch=1` to the URL to preview touch controls on a desktop browser
 
 ## Preserved v0.20 systems

@@ -1,3 +1,25 @@
+# ANTBOUND v0.20.3 — Touch Look
+
+## Added
+
+- Direct camera look by dragging the playable world on touch screens.
+- Touch-specific yaw and pitch sensitivity.
+- Pointer capture for uninterrupted camera movement.
+- A temporary “Drag the world to look” hint on touch devices.
+
+## Fixed
+
+- Touch pointer movement now updates camera yaw and pitch instead of relying on mouse events.
+- Camera dragging no longer queues a bite.
+- Interrupted or cancelled touch gestures release camera-look state cleanly.
+
+## Preserved
+
+- Bottom-left movement joystick.
+- Compact action and expandable behavior controls.
+- Desktop mouse and keyboard controls.
+- Scheduler, chunks, local engine modules, and dense procedural vegetation.
+
 # ANTBOUND v0.20.2 — Touch Controls
 
 ## Added

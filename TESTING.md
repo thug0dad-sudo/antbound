@@ -1,9 +1,9 @@
-# ANTBOUND v0.20.2 testing
+# ANTBOUND v0.20.3 testing
 
 ## Launch
 
 ```bash
-cd ANTBOUND-v0.20.2
+cd ANTBOUND-v0.20.3
 python3 -m http.server 8080
 ```
 
@@ -27,8 +27,10 @@ Open `http://localhost:8080/?touch=1`.
 3. Hold **Run** while moving and confirm sprint activates.
 4. Press **Bite** and **Use** and confirm their queued actions fire once.
 5. Open **More** and test Sense, View, Climb, Sound, and Link.
-6. Drag the game world outside the controls and confirm camera look does not trigger a bite.
-7. Verify the controls at 320×568, 768×1024, and desktop widths.
+6. Drag the game world outside the controls horizontally and vertically; confirm yaw and pitch respond.
+7. Move the finger quickly beyond its starting area and confirm pointer capture keeps camera look active.
+8. Release or cancel the gesture and confirm the camera stops immediately without triggering a bite.
+9. Verify the controls at 320×568, 768×1024, and desktop widths.
 
 ## Automated validation
 

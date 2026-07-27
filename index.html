@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
 <link rel="icon" href="data:," />
-<title>ANTBOUND v0.20.2 — Touch Controls</title>
+<title>ANTBOUND v0.20.3 — Touch Look</title>
   <style>
 :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10130c}canvas{display:block;touch-action:none;outline:none}.hidden{display:none!important}#hud{position:fixed;z-index:5;inset:0;pointer-events:none;color:#f5f1db;text-shadow:0 2px 5px #000;font-weight:650}.panel{background:rgba(17,20,12,.76);border:1px solid rgba(255,245,200,.22);backdrop-filter:blur(8px);border-radius:14px;padding:10px 13px;box-shadow:0 8px 28px #0007}#top{position:absolute;left:18px;right:18px;top:18px;display:flex;justify-content:space-between;gap:16px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#cbbf83;margin-bottom:4px}#objective{max-width:480px;font-size:14px}#missionTitle{color:#f2d86d;font-weight:900;margin-bottom:3px}#weatherLine{margin-top:7px;font-size:11px;color:#dfe7d1}#meters{min-width:285px;display:grid;gap:7px}.meter{display:grid;grid-template-columns:60px 1fr 38px;gap:7px;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.bar{height:7px;background:#25291d;border-radius:99px;overflow:hidden}.fill{height:100%;background:#d5bd59}.danger .fill{background:#d46445}.statusline{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #ffffff1f;padding-top:7px;font-size:10px;text-transform:uppercase;letter-spacing:.05em}.statusline b{color:#f0d467}.subline{font-size:10px;color:#ccc7aa;display:flex;gap:10px;flex-wrap:wrap}#crosshair{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px;border:1px solid #fff;border-radius:50%;box-shadow:0 0 8px #fff}#prompt{position:absolute;left:50%;bottom:20%;transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#080a06d9;border:1px solid #ffffff28;opacity:0;transition:.15s;font-size:13px}#safeNotice{position:absolute;left:18px;bottom:70px;max-width:350px;display:none;border-color:#8fd49b66;background:rgba(12,38,22,.82)}#safeNotice strong{color:#a8efaf;letter-spacing:.08em;text-transform:uppercase;font-size:11px}#safeText{margin-top:5px;color:#e1f3df;font-size:13px;line-height:1.4}#version{position:absolute;right:18px;bottom:18px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d8d0a9}.help{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#d8d0a9;white-space:nowrap}#overlay,#win,#lose{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#59603477,#050704f5);z-index:10;padding:24px;color:white}#win,#lose{display:none}.card{max-width:760px;background:#0b0d08ed;border:1px solid #e1d9a740;border-radius:26px;padding:32px;box-shadow:0 30px 80px #0008}h1{font-size:clamp(40px,8vw,78px);margin:0;line-height:.88;letter-spacing:-.05em}h1 span{display:block;font-size:.18em;letter-spacing:.25em;margin:16px 0 24px;color:#d8c469}p{color:#d7d5c8;line-height:1.55}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 18px;margin:20px 0;color:#cbc6aa;font-size:13px}.controls b{color:#fff}.startrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}button,select{pointer-events:auto;border:0;border-radius:999px;padding:13px 20px;font-weight:850;letter-spacing:.07em;text-transform:uppercase;background:#e0c85e;color:#1c1a0f;cursor:pointer}select{background:#24271c;color:#eee;border:1px solid #ffffff2b}#debug{position:absolute;left:18px;top:190px;white-space:pre;font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;display:none;max-width:360px}#networkBadge{color:#b9d8ff}#toast{position:absolute;left:50%;top:19%;transform:translateX(-50%);opacity:0;transition:.25s;padding:10px 15px;border-radius:999px;background:#0a0c08e8;border:1px solid #ffffff30;font-size:13px}body.underground #hud{color:#efe1cb}body.underground #crosshair{box-shadow:0 0 8px #d7b99c}@media(max-width:760px){#top{left:10px;right:10px;top:10px;flex-direction:column}.help{font-size:8px;bottom:10px}.card{padding:23px}.controls{grid-template-columns:1fr}#version{right:10px;bottom:31px}#safeNotice{left:10px;bottom:45px}}
 
@@ -40,13 +40,17 @@ button.disabled,button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(
 #behaviorMenu{position:absolute;right:0;bottom:148px;display:grid;grid-template-columns:repeat(2,48px);gap:8px;opacity:0;transform:translateY(10px) scale(.94);transform-origin:bottom right;pointer-events:none;transition:opacity 140ms ease,transform 140ms ease}
 #behaviorMenu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 #behaviorMenu .touchAction{width:48px;height:48px;font-size:7px;background:rgba(11,17,9,.74)}
+#lookHint{position:absolute;left:50%;bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);padding:7px 11px;border-radius:999px;background:rgba(8,13,7,.45);border:1px solid rgba(238,246,220,.2);color:rgba(241,247,231,.72);font:750 8px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity 240ms ease;backdrop-filter:blur(4px)}
 body.touch-ui #touchControls{display:block}
+body.touch-ui #lookHint{opacity:1;animation:lookHintFade 6s 2s forwards}
+body.touch-ui.touch-looking #lookHint{opacity:0;animation:none}
 body.touch-ui .help{display:none}
 body.touch-ui #version{left:50%;right:auto;transform:translateX(-50%);bottom:max(8px,env(safe-area-inset-bottom));white-space:nowrap}
 body.touch-ui #minimapWrap{bottom:max(164px,calc(env(safe-area-inset-bottom) + 164px))!important}
 body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden!important}
 @media(max-width:760px){body.touch-ui #top{pointer-events:none}body.touch-ui #objective{max-width:calc(100vw - 20px)}body.touch-ui #meters{min-width:0}#moveStick{width:116px;height:116px}#actionDock{grid-template-columns:repeat(2,54px)}.touchAction{width:54px;height:54px}.touchAction.primary{width:62px;height:62px}}
 @media(max-height:560px){body.touch-ui #objective{display:none}body.touch-ui #meters{transform:scale(.86);transform-origin:top right}#moveStick{width:104px;height:104px}#actionDock{bottom:10px}body.touch-ui #minimapWrap{display:none!important}}
+@keyframes lookHintFade{to{opacity:0}}
 
 </style>
 </head>
@@ -65,12 +69,13 @@ body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden
   <div id="safeNotice" class="panel"><strong>Safe zone</strong><div id="safeText"></div></div>
   <div id="debug" class="panel"></div></div>
   <div class="help">WASD move · mouse look · E interact · Shift sprint · F senses · C camera · Space climb · M mute · ` debug · N network</div>
-  <div id="version">v0.20.2 · Touch Controls</div>
+  <div id="version">v0.20.3 · Touch Look</div>
 </div>
 
 <div id="minimapWrap" data-status="booting"><canvas id="minimap" width="320" height="320" aria-label="Circular yard minimap"></canvas><div id="mapLabel">Yard map</div></div>
 <div id="touchControls" aria-label="Touch game controls">
   <div id="moveStick" role="application" aria-label="Movement joystick"><div id="moveKnob"></div></div>
+  <div id="lookHint" aria-hidden="true">Drag the world to look</div>
   <div id="actionDock">
     <button id="touchAttack" class="touchAction primary" type="button" aria-label="Bite or attack">Bite</button>
     <button id="touchSprint" class="touchAction" type="button" aria-label="Hold to sprint">Run</button>
@@ -85,11 +90,11 @@ body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden
     </div>
   </div>
 </div>
-<div id="overlay"><div class="card"><h1>ANTBOUND<span>Touch Controls · v0.20.2</span></h1><p id="releaseSummary">Responsive joystick and compact behavior controls with the v0.20 scheduler, chunk activation, and dense procedural overgrowth preserved.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Drag</b> Look</span><span><b>Left click / Bite</b> Attack</span><span><b>E / Use</b> Interact</span><span><b>C / View</b> Camera</span><span><b>Shift / Run</b> Sprint</span><span><b>F / Sense</b> Sensory view</span><span><b>Space / Climb</b> Climb</span></div><div class="startrow"><button id="start">Enter the yard</button><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
+<div id="overlay"><div class="card"><h1>ANTBOUND<span>Touch Look · v0.20.3</span></h1><p id="releaseSummary">Touch-screen camera look, responsive joystick controls, compact behaviors, and dense procedural overgrowth.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Bite</b> Attack</span><span><b>E / Use</b> Interact</span><span><b>C / View</b> Camera</span><span><b>Shift / Run</b> Sprint</span><span><b>F / Sense</b> Sensory view</span><span><b>Space / Climb</b> Climb</span></div><div class="startrow"><button id="start">Enter the yard</button><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
 <div id="win"><div class="card"><h1>COLONY SECURED<span>THE LINE HOLDS</span></h1><p>You completed the available progression for this release.</p><button id="restartWin">Play again</button></div></div>
 <div id="lose"><div class="card"><h1>TAKEN<span>THE YARD IS HUNGRY</span></h1><p>A predator caught you outside shelter.</p><button id="restartLose">Try again</button></div></div>
 <noscript><div class="boot-error">JavaScript is required to run ANTBOUND.</div></noscript>
-<div id="runtimeStatus" aria-live="polite">v0.20.2 touch controls ready</div>
+<div id="runtimeStatus" aria-live="polite">v0.20.3 touch look ready</div>
 
 <script type="module">
 let THREE;
@@ -115,9 +120,9 @@ try {
 
 // ---- config.js ----
 const BUILD = Object.freeze({
-  version: 'v0.20.2',
-  label: 'Touch Controls',
-  level: 202,
+  version: 'v0.20.3',
+  label: 'Touch Look',
+  level: 203,
   seed: 72831,
   simulationHz: 30,
   networkHz: 20,
@@ -208,7 +213,7 @@ function createGameState(){
 
 class InputController{
   constructor(canvas){
-    this.canvas=canvas;this.keys=new Set();this.pointerLocked=false;this.dragging=false;this.lastX=0;this.lastY=0;this.yaw=0;this.pitch=-.08;this.interactQueued=false;this.toggleCamera=false;this.toggleDebug=false;this.toggleMute=false;this.toggleNetwork=false;this.jumpQueued=false;this.attackQueued=false;this.cameraToggleAt=0;
+    this.canvas=canvas;this.keys=new Set();this.pointerLocked=false;this.dragging=false;this.touchLookPointer=null;this.lastX=0;this.lastY=0;this.yaw=0;this.pitch=-.08;this.interactQueued=false;this.toggleCamera=false;this.toggleDebug=false;this.toggleMute=false;this.toggleNetwork=false;this.jumpQueued=false;this.attackQueued=false;this.cameraToggleAt=0;
     canvas.tabIndex=0;
     this.requestPointerLock=()=>{
       try {
@@ -218,15 +223,23 @@ class InputController{
         console.info('Mouse capture is unavailable',error?.name||error);
       }
     };
+    this.applyLook=(dx,dy,multiplier=1)=>{
+      this.yaw=(this.yaw+dx*.00205*multiplier)%(Math.PI*2);
+      this.pitch=clamp(this.pitch-dy*.0017*multiplier,-1.08,.8);
+    };
     const normalize=c=>({ArrowUp:'KeyW',ArrowDown:'KeyS',ArrowLeft:'KeyA',ArrowRight:'KeyD',ShiftRight:'ShiftLeft'})[c]||c;
     addEventListener('keydown',e=>{const c=normalize(e.code);if(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','KeyF','KeyE','KeyC','KeyM','KeyN','Backquote','Space'].includes(c))e.preventDefault();this.keys.add(c);if(c==='KeyE'&&!e.repeat)this.interactQueued=true;if(c==='KeyC'&&!e.repeat&&performance.now()-this.cameraToggleAt>300){this.toggleCamera=true;this.cameraToggleAt=performance.now();}if(c==='Backquote'&&!e.repeat)this.toggleDebug=true;if(c==='KeyM'&&!e.repeat)this.toggleMute=true;if(c==='KeyN'&&!e.repeat)this.toggleNetwork=true;if(c==='Space'&&!e.repeat)this.jumpQueued=true;},{capture:true});
     addEventListener('keyup',e=>this.keys.delete(normalize(e.code)),{capture:true});
     addEventListener('blur',()=>this.keys.clear());
     document.addEventListener('visibilitychange',()=>{if(document.hidden)this.keys.clear();});
-    canvas.addEventListener('pointerdown',e=>{canvas.focus();this.dragging=true;this.lastX=e.clientX;this.lastY=e.clientY;if(e.button===0&&e.pointerType!=='touch')this.attackQueued=true;if(e.pointerType!=='touch')this.requestPointerLock();});
-    addEventListener('pointerup',()=>this.dragging=false);
+    canvas.addEventListener('pointerdown',e=>{canvas.focus();this.dragging=true;this.lastX=e.clientX;this.lastY=e.clientY;if(e.pointerType==='touch'){e.preventDefault();this.touchLookPointer=e.pointerId;canvas.setPointerCapture?.(e.pointerId);document.body.classList.add('touch-looking');}else{if(e.button===0)this.attackQueued=true;this.requestPointerLock();}});
+    canvas.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||this.touchLookPointer!==e.pointerId)return;e.preventDefault();const dx=e.clientX-this.lastX,dy=e.clientY-this.lastY;this.lastX=e.clientX;this.lastY=e.clientY;this.applyLook(dx,dy,1.8);});
+    const endPointer=e=>{if(e.pointerId===this.touchLookPointer){this.touchLookPointer=null;document.body.classList.remove('touch-looking');}this.dragging=false;};
+    addEventListener('pointerup',endPointer);
+    addEventListener('pointercancel',endPointer);
+    canvas.addEventListener('lostpointercapture',endPointer);
     document.addEventListener('pointerlockchange',()=>this.pointerLocked=document.pointerLockElement===canvas);
-    document.addEventListener('mousemove',e=>{let dx=0,dy=0;if(this.pointerLocked){dx=e.movementX;dy=e.movementY;}else if(this.dragging){dx=e.clientX-this.lastX;dy=e.clientY-this.lastY;this.lastX=e.clientX;this.lastY=e.clientY;}if(dx||dy){this.yaw=(this.yaw+dx*.00205)%(Math.PI*2);this.pitch=clamp(this.pitch-dy*.0017,-1.08,.8);}});
+    document.addEventListener('mousemove',e=>{let dx=0,dy=0;if(this.pointerLocked){dx=e.movementX;dy=e.movementY;}else if(this.dragging){dx=e.clientX-this.lastX;dy=e.clientY-this.lastY;this.lastX=e.clientX;this.lastY=e.clientY;}if(dx||dy)this.applyLook(dx,dy);});
   }
   command(){
     const forward=(this.keys.has('KeyW')?1:0)-(this.keys.has('KeyS')?1:0),strafe=(this.keys.has('KeyD')?1:0)-(this.keys.has('KeyA')?1:0);
