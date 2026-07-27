@@ -1,3 +1,29 @@
+# ANTBOUND v0.21.0 — Immersive Interface
+
+## Added
+
+- One floating contextual action for collecting, delivering, entering, climbing, and biting.
+- Automatic sprint when the movement joystick reaches its outer edge.
+- Outer-yard colony entrances, shelters, paths, food sites, vegetation thickets, and surface detail.
+- An interface regression test covering contextual input, stamina visibility, HUD motion state, auto-sprint, multi-touch, and world expansion.
+
+## Changed
+
+- Playable yard radius increased from 110 to 150 world units.
+- Objective and status panels fade while the player is moving.
+- Stamina remains hidden until it drops below 72%, then hides after full recovery.
+- Minimap is smaller, translucent, and fades further during movement.
+- Vegetation and detail presets were increased for the larger terrain.
+
+## Fixed
+
+- Context actions now queue the exact matching gameplay input.
+- Full-stick sprint releases cleanly when the joystick returns or is cancelled.
+- Spider bites can now connect with its larger collision footprint.
+- Biting the spider briefly stuns it, preventing an unavoidable collision during the counterattack.
+- Context actions no longer remain visible over win or loss screens.
+- World-bound systems now use the expanded map radius instead of old fixed limits.
+
 # ANTBOUND v0.20.4 — Multi-Touch Controls
 
 ## Fixed

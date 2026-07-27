@@ -1,6 +1,6 @@
-# ANTBOUND v0.20.4
+# ANTBOUND v0.21.0
 
-Multi-Touch Controls lets mobile players move with the joystick while independently looking, sprinting, or attacking with another finger.
+Immersive Interface replaces the permanent mobile button dock with contextual actions, reduces HUD obstruction while moving, and expands the playable yard.
 
 ## Live build
 
@@ -11,7 +11,7 @@ https://antbound-thug0dad-3216s-projects.vercel.app
 From the directory containing this folder:
 
 ```bash
-python3 -m http.server 8080 --directory ANTBOUND-v0.20.4
+python3 -m http.server 8080 --directory ANTBOUND-v0.21.0
 ```
 
 Open `http://localhost:8080`.
@@ -21,21 +21,30 @@ Three.js 0.166.1 is included under `vendor/`, so the game does not need CDN acce
 ## Touch controls
 
 - Translucent movement joystick at bottom left
-- Bite, run, and use buttons at bottom right
-- Expandable behavior menu for sense, camera, climb, sound, and multiplayer
+- Push the joystick to its outer edge to sprint automatically
 - Drag anywhere outside the controls to look around
-- Joystick, camera, and action buttons own separate pointer IDs for reliable simultaneous input
+- Joystick, touch look, and contextual actions own separate pointer IDs for reliable simultaneous input
 - Touch look is tracked at the window level, so another captured finger cannot interrupt it
+- Collect, deliver, enter, climb, and bite actions appear only when they are available
+- The objective, status panels, and map fade while moving
+- Stamina appears below 72% and disappears again after fully recovering
 - Add `?touch=1` to the URL to preview touch controls on a desktop browser
-- Add `?touch=1&autostart=1&selftest=multitouch` to run the built-in two-finger regression check
+- Add `?touch=1&quality=smoke&autostart=1&selftest=interface` to run the built-in interface regression check
 
-## Preserved v0.20 systems
+## Larger yard
+
+- Playable radius increased from 110 to 150 world units
+- New outer colony entrances, shelters, paths, food sites, thickets, rocks, and plants
+- Predator patrol, flyer spawning, world bounds, and vegetation placement use the expanded radius
+- Local minimap is smaller and translucent while covering the nearby active area
+
+## Preserved engine systems
 
 - Fixed-rate subsystem scheduler
 - Chunk-based simulation sleeping
 - Per-system timing and error telemetry
 - Renderer-only, GPU-instanced vegetation
 - Seeded grass thickets, paths, and varied blade height, width, lean, and rotation
-- Medium preset: up to 18,000 grass instances
-- High preset: up to 28,000 grass instances
-- Ultra preset: up to 40,000 grass instances
+- Medium preset: up to 26,000 grass instances
+- High preset: up to 38,000 grass instances
+- Ultra preset: up to 54,000 grass instances

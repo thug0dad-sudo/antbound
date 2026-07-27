@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
 <link rel="icon" href="data:," />
-<title>ANTBOUND v0.20.4 — Multi-Touch Controls</title>
+<title>ANTBOUND v0.21.0 — Immersive Interface</title>
   <style>
 :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10130c}canvas{display:block;touch-action:none;outline:none}.hidden{display:none!important}#hud{position:fixed;z-index:5;inset:0;pointer-events:none;color:#f5f1db;text-shadow:0 2px 5px #000;font-weight:650}.panel{background:rgba(17,20,12,.76);border:1px solid rgba(255,245,200,.22);backdrop-filter:blur(8px);border-radius:14px;padding:10px 13px;box-shadow:0 8px 28px #0007}#top{position:absolute;left:18px;right:18px;top:18px;display:flex;justify-content:space-between;gap:16px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#cbbf83;margin-bottom:4px}#objective{max-width:480px;font-size:14px}#missionTitle{color:#f2d86d;font-weight:900;margin-bottom:3px}#weatherLine{margin-top:7px;font-size:11px;color:#dfe7d1}#meters{min-width:285px;display:grid;gap:7px}.meter{display:grid;grid-template-columns:60px 1fr 38px;gap:7px;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.bar{height:7px;background:#25291d;border-radius:99px;overflow:hidden}.fill{height:100%;background:#d5bd59}.danger .fill{background:#d46445}.statusline{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #ffffff1f;padding-top:7px;font-size:10px;text-transform:uppercase;letter-spacing:.05em}.statusline b{color:#f0d467}.subline{font-size:10px;color:#ccc7aa;display:flex;gap:10px;flex-wrap:wrap}#crosshair{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px;border:1px solid #fff;border-radius:50%;box-shadow:0 0 8px #fff}#prompt{position:absolute;left:50%;bottom:20%;transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:#080a06d9;border:1px solid #ffffff28;opacity:0;transition:.15s;font-size:13px}#safeNotice{position:absolute;left:18px;bottom:70px;max-width:350px;display:none;border-color:#8fd49b66;background:rgba(12,38,22,.82)}#safeNotice strong{color:#a8efaf;letter-spacing:.08em;text-transform:uppercase;font-size:11px}#safeText{margin-top:5px;color:#e1f3df;font-size:13px;line-height:1.4}#version{position:absolute;right:18px;bottom:18px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d8d0a9}.help{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#d8d0a9;white-space:nowrap}#overlay,#win,#lose{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#59603477,#050704f5);z-index:10;padding:24px;color:white}#win,#lose{display:none}.card{max-width:760px;background:#0b0d08ed;border:1px solid #e1d9a740;border-radius:26px;padding:32px;box-shadow:0 30px 80px #0008}h1{font-size:clamp(40px,8vw,78px);margin:0;line-height:.88;letter-spacing:-.05em}h1 span{display:block;font-size:.18em;letter-spacing:.25em;margin:16px 0 24px;color:#d8c469}p{color:#d7d5c8;line-height:1.55}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 18px;margin:20px 0;color:#cbc6aa;font-size:13px}.controls b{color:#fff}.startrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}button,select{pointer-events:auto;border:0;border-radius:999px;padding:13px 20px;font-weight:850;letter-spacing:.07em;text-transform:uppercase;background:#e0c85e;color:#1c1a0f;cursor:pointer}select{background:#24271c;color:#eee;border:1px solid #ffffff2b}#debug{position:absolute;left:18px;top:190px;white-space:pre;font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;display:none;max-width:360px}#networkBadge{color:#b9d8ff}#toast{position:absolute;left:50%;top:19%;transform:translateX(-50%);opacity:0;transition:.25s;padding:10px 15px;border-radius:999px;background:#0a0c08e8;border:1px solid #ffffff30;font-size:13px}body.underground #hud{color:#efe1cb}body.underground #crosshair{box-shadow:0 0 8px #d7b99c}@media(max-width:760px){#top{left:10px;right:10px;top:10px;flex-direction:column}.help{font-size:8px;bottom:10px}.card{padding:23px}.controls{grid-template-columns:1fr}#version{right:10px;bottom:31px}#safeNotice{left:10px;bottom:45px}}
 
@@ -41,17 +41,39 @@ button.disabled,button:disabled{cursor:not-allowed;opacity:.55;filter:grayscale(
 #behaviorMenu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 #behaviorMenu .touchAction{width:48px;height:48px;font-size:7px;background:rgba(11,17,9,.74)}
 #lookHint{position:absolute;left:50%;bottom:max(82px,calc(env(safe-area-inset-bottom) + 82px));transform:translateX(-50%);padding:7px 11px;border-radius:999px;background:rgba(8,13,7,.45);border:1px solid rgba(238,246,220,.2);color:rgba(241,247,231,.72);font:750 8px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity 240ms ease;backdrop-filter:blur(4px)}
+#contextAction{position:absolute;left:50%;bottom:max(34px,calc(env(safe-area-inset-bottom) + 34px));min-width:104px;max-width:min(68vw,260px);min-height:48px;transform:translate(-50%,12px) scale(.94);padding:0 18px;border-radius:999px;opacity:0;visibility:hidden;pointer-events:none;background:rgba(18,25,14,.72);color:#f5f7ea;border:1px solid rgba(238,246,220,.38);box-shadow:0 8px 28px rgba(0,0,0,.38);backdrop-filter:blur(6px);transition:opacity 150ms ease,transform 150ms ease,visibility 150ms;font:850 10px/1 system-ui;letter-spacing:.09em;text-transform:uppercase}
+#contextAction.visible{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+#contextAction[data-kind="attack"]{background:rgba(126,56,39,.76);border-color:rgba(255,191,154,.6)}
+#contextAction[data-kind="interact"]{background:rgba(55,85,43,.78);border-color:rgba(178,234,157,.58)}
+#contextAction[data-kind="jump"]{background:rgba(50,72,86,.78);border-color:rgba(170,218,239,.58)}
+#staminaMeter{position:absolute;left:50%;top:18px;transform:translate(-50%,-8px);width:min(230px,52vw);grid-template-columns:54px 1fr 34px;opacity:0;visibility:hidden;transition:opacity 180ms ease,transform 180ms ease,visibility 180ms ease}
+body.low-stamina #staminaMeter{opacity:1;visibility:visible;transform:translate(-50%,0)}
 body.touch-ui #touchControls{display:block}
 body.touch-ui{touch-action:none;overscroll-behavior:none}
+body.touch-ui #prompt{display:none}
 body.touch-ui #lookHint{opacity:1;animation:lookHintFade 6s 2s forwards}
 body.touch-ui.touch-looking #lookHint{opacity:0;animation:none}
 body.touch-ui .help{display:none}
 body.touch-ui #version{left:50%;right:auto;transform:translateX(-50%);bottom:max(8px,env(safe-area-inset-bottom));white-space:nowrap}
-body.touch-ui #minimapWrap{bottom:max(164px,calc(env(safe-area-inset-bottom) + 164px))!important}
+body.touch-ui #minimapWrap{bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px))!important}
 body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden!important}
 @media(max-width:760px){body.touch-ui #top{pointer-events:none}body.touch-ui #objective{max-width:calc(100vw - 20px)}body.touch-ui #meters{min-width:0}#moveStick{width:116px;height:116px}#actionDock{grid-template-columns:repeat(2,54px)}.touchAction{width:54px;height:54px}.touchAction.primary{width:62px;height:62px}}
 @media(max-height:560px){body.touch-ui #objective{display:none}body.touch-ui #meters{transform:scale(.86);transform-origin:top right}#moveStick{width:104px;height:104px}#actionDock{bottom:10px}body.touch-ui #minimapWrap{display:none!important}}
 @keyframes lookHintFade{to{opacity:0}}
+
+/* v0.21 immersive HUD overrides */
+#minimapWrap{width:118px!important;height:118px!important;right:14px!important;bottom:18px!important;padding:5px!important;opacity:.68!important;background:rgba(7,16,7,.58)!important;border:1px solid rgba(150,237,170,.48)!important;box-shadow:0 0 16px rgba(76,223,132,.18)!important;transition:opacity 220ms ease,transform 220ms ease!important}
+#minimapWrap::before{display:none!important}
+#mapLabel{display:none}
+body.ui-in-motion #minimapWrap{opacity:.24!important;transform:scale(.9)}
+body.touch-ui #objective,body.touch-ui #meters,body.touch-ui #safeNotice,body.touch-ui #version{transition:opacity 220ms ease,transform 220ms ease}
+body.touch-ui.ui-in-motion:not(.ui-alert) #objective,body.touch-ui.ui-in-motion:not(.ui-alert) #meters,body.touch-ui.ui-in-motion #safeNotice,body.touch-ui.ui-in-motion #version{opacity:0;transform:translateY(-8px)}
+body.touch-ui.ui-in-motion #moveStick{opacity:.48}
+body.touch-ui.ui-in-motion #moveKnob{opacity:.72}
+body.touch-ui #moveStick{transition:opacity 220ms ease}
+body.touch-ui #moveKnob{transition:transform 70ms ease-out,opacity 220ms ease}
+@media(max-width:760px){#minimapWrap{width:96px!important;height:96px!important;right:8px!important;bottom:10px!important}#staminaMeter{top:10px;width:min(210px,58vw)}}
+@media(max-height:560px){body.touch-ui #minimapWrap{display:block!important;width:82px!important;height:82px!important}}
 
 </style>
 </head>
@@ -60,42 +82,30 @@ body.touch-ui.touch-menu-open #minimapWrap{opacity:0!important;visibility:hidden
   <div id="top">
     <div id="objective" class="panel"><div class="eyebrow">Current objective</div><div id="missionTitle">Forage</div><div id="objectiveText">Deliver food to the allied colony.</div><div id="weatherLine">Clear · light breeze</div></div>
     <div id="meters" class="panel">
-      <div class="meter"><span>Stamina</span><div class="bar"><div id="stamina" class="fill"></div></div><span id="staminaN">100</span></div>
       <div class="meter danger"><span>Danger</span><div class="bar"><div id="danger" class="fill" style="width:0"></div></div><span id="dangerN">0</span></div>
       <div class="statusline"><span>Allied <b id="allyScore">0</b></span><span>Rival <b id="rivalScore">0</b></span><span>Food <b id="foodLeft">0</b></span></div>
       <div class="subline"><span id="broodLine">Colony stable</span><span id="networkBadge">Offline</span></div>
     </div>
   </div>
+  <div id="staminaMeter" class="panel meter"><span>Stamina</span><div class="bar"><div id="stamina" class="fill"></div></div><span id="staminaN">100</span></div>
   <div id="crosshair"></div><div id="prompt"></div><div id="toast"></div>
   <div id="safeNotice" class="panel"><strong>Safe zone</strong><div id="safeText"></div></div>
   <div id="debug" class="panel"></div></div>
   <div class="help">WASD move · mouse look · E interact · Shift sprint · F senses · C camera · Space climb · M mute · ` debug · N network</div>
-  <div id="version">v0.20.4 · Multi-Touch Controls</div>
+  <div id="version">v0.21.0 · Immersive Interface</div>
 </div>
 
 <div id="minimapWrap" data-status="booting"><canvas id="minimap" width="320" height="320" aria-label="Circular yard minimap"></canvas><div id="mapLabel">Yard map</div></div>
 <div id="touchControls" aria-label="Touch game controls">
   <div id="moveStick" role="application" aria-label="Movement joystick"><div id="moveKnob"></div></div>
   <div id="lookHint" aria-hidden="true">Drag the world to look</div>
-  <div id="actionDock">
-    <button id="touchAttack" class="touchAction primary" type="button" aria-label="Bite or attack">Bite</button>
-    <button id="touchSprint" class="touchAction" type="button" aria-label="Hold to sprint">Run</button>
-    <button id="touchInteract" class="touchAction" type="button" aria-label="Interact or enter">Use</button>
-    <button id="behaviorToggle" class="touchAction" type="button" aria-label="Open behavior controls" aria-expanded="false" aria-controls="behaviorMenu">More</button>
-    <div id="behaviorMenu" aria-label="Behavior controls">
-      <button id="touchSense" class="touchAction" type="button" aria-label="Hold for sensory view">Sense</button>
-      <button id="touchCamera" class="touchAction" type="button" aria-label="Switch camera">View</button>
-      <button id="touchClimb" class="touchAction" type="button" aria-label="Climb or dismount">Climb</button>
-      <button id="touchMute" class="touchAction" type="button" aria-label="Mute or unmute">Sound</button>
-      <button id="touchNetwork" class="touchAction" type="button" aria-label="Toggle multiplayer connection">Link</button>
-    </div>
-  </div>
+  <button id="contextAction" type="button" aria-live="polite" aria-label="Context action"></button>
 </div>
-<div id="overlay"><div class="card"><h1>ANTBOUND<span>Multi-Touch Controls · v0.20.4</span></h1><p id="releaseSummary">Move with one finger while independently looking, sprinting, or attacking with another.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Bite</b> Attack</span><span><b>E / Use</b> Interact</span><span><b>C / View</b> Camera</span><span><b>Shift / Run</b> Sprint</span><span><b>F / Sense</b> Sensory view</span><span><b>Space / Climb</b> Climb</span></div><div class="startrow"><button id="start">Enter the yard</button><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
+<div id="overlay"><div class="card"><h1>ANTBOUND<span>Immersive Interface · v0.21.0</span></h1><p id="releaseSummary">A larger yard with an interface that gets out of the way while you move.</p><div class="controls"><span><b>WASD / Joystick</b> Move</span><span><b>Mouse / Screen drag</b> Look</span><span><b>Left click / Context</b> Bite</span><span><b>E / Context</b> Interact</span><span><b>Full joystick</b> Sprint</span><span><b>Space / Context</b> Climb</span><span><b>C</b> Camera</span><span><b>F</b> Sensory view</span></div><div class="startrow"><button id="start">Enter the yard</button><label>Graphics <select id="quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="ultra">Ultra</option></select></label></div></div></div>
 <div id="win"><div class="card"><h1>COLONY SECURED<span>THE LINE HOLDS</span></h1><p>You completed the available progression for this release.</p><button id="restartWin">Play again</button></div></div>
 <div id="lose"><div class="card"><h1>TAKEN<span>THE YARD IS HUNGRY</span></h1><p>A predator caught you outside shelter.</p><button id="restartLose">Try again</button></div></div>
 <noscript><div class="boot-error">JavaScript is required to run ANTBOUND.</div></noscript>
-<div id="runtimeStatus" aria-live="polite">v0.20.4 multi-touch ready</div>
+<div id="runtimeStatus" aria-live="polite">v0.21.0 immersive interface ready</div>
 
 <script type="module">
 let THREE;
@@ -121,9 +131,9 @@ try {
 
 // ---- config.js ----
 const BUILD = Object.freeze({
-  version: 'v0.20.4',
-  label: 'Multi-Touch Controls',
-  level: 204,
+  version: 'v0.21.0',
+  label: 'Immersive Interface',
+  level: 210,
   seed: 72831,
   simulationHz: 30,
   networkHz: 20,
@@ -149,15 +159,15 @@ const FEATURES = Object.freeze({
 });
 
 const QUALITY_PRESETS = Object.freeze({
-  smoke: { grass: 500, shadows: false, pixelRatio: .75, flyers: 1, antsPerColony: 2, detail: .05 },
-  low: { grass: 9000, shadows: false, pixelRatio: 1, flyers: 3, antsPerColony: 6, detail: .55 },
-  medium: { grass: 18000, shadows: false, pixelRatio: 1, flyers: 7, antsPerColony: 9, detail: 1 },
-  high: { grass: 28000, shadows: false, pixelRatio: 1.1, flyers: 10, antsPerColony: 13, detail: 1.45 },
-  ultra: { grass: 40000, shadows: true, pixelRatio: 1.2, flyers: 14, antsPerColony: 16, detail: 2 },
+  smoke: { grass: 700, shadows: false, pixelRatio: .75, flyers: 1, antsPerColony: 2, detail: .05 },
+  low: { grass: 12000, shadows: false, pixelRatio: 1, flyers: 3, antsPerColony: 6, detail: .65 },
+  medium: { grass: 26000, shadows: false, pixelRatio: 1, flyers: 7, antsPerColony: 9, detail: 1.25 },
+  high: { grass: 38000, shadows: false, pixelRatio: 1.1, flyers: 10, antsPerColony: 13, detail: 1.75 },
+  ultra: { grass: 54000, shadows: true, pixelRatio: 1.2, flyers: 14, antsPerColony: 16, detail: 2.4 },
 });
 
 const WORLD = Object.freeze({
-  radius: 110,
+  radius: 150,
   foodGoal: 4,
   alliedColor: 0x2c1b13,
   rivalColor: 0x8f2e22,
@@ -234,7 +244,7 @@ class InputController{
     addEventListener('blur',()=>this.keys.clear());
     document.addEventListener('visibilitychange',()=>{if(document.hidden)this.keys.clear();});
     canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;canvas.focus();this.dragging=true;this.mouseDragPointer=e.pointerId;this.lastX=e.clientX;this.lastY=e.clientY;if(e.button===0)this.attackQueued=true;this.requestPointerLock();});
-    const touchControlTarget=target=>target instanceof Element&&Boolean(target.closest('#moveStick,#actionDock,#overlay,#win,#lose,select'));
+    const touchControlTarget=target=>target instanceof Element&&Boolean(target.closest('#moveStick,#contextAction,#overlay,#win,#lose,select'));
     const startTouchLook=e=>{
       if(e.pointerType!=='touch'||!document.body.classList.contains('touch-ui')||this.touchLookPointer!==null||touchControlTarget(e.target))return;
       e.preventDefault();
@@ -300,16 +310,19 @@ const ALLIED_ENTRANCES=[
   {id:'ally-root',species:'allied',x:-28,z:20,radius:2.8,name:'Root tunnel'},
   {id:'ally-drain',species:'allied',x:18,z:-28,radius:2.8,name:'Drainage tunnel'},
   {id:'ally-moss',species:'allied',x:-10,z:49,radius:2.7,name:'Moss tunnel'},
+  {id:'ally-fence',species:'allied',x:-116,z:88,radius:2.9,name:'Fence-line tunnel'},
 ];
 const RIVAL_ENTRANCES=[
   {id:'rival-main',species:'rival',x:78,z:52,radius:3.1,name:'Red-ant mound'},
   {id:'rival-grass',species:'rival',x:58,z:70,radius:2.8,name:'Grass tunnel'},
   {id:'rival-stone',species:'rival',x:83,z:18,radius:2.7,name:'Stone tunnel'},
   {id:'rival-root',species:'rival',x:54,z:32,radius:2.7,name:'Rival root tunnel'},
+  {id:'rival-compost',species:'rival',x:121,z:-86,radius:3.0,name:'Compost mound'},
 ];
 const ENTRANCES=[...ALLIED_ENTRANCES,...RIVAL_ENTRANCES];
 const PATHS=[
-  [0,0,38,-18],[38,-18,73,-9],[0,0,-45,-28],[-45,-28,-70,10],[-28,20,-8,49],[-10,49,25,63],[18,-28,55,-46],[54,32,78,52],[58,70,24,63],[83,18,55,-46],[0,0,24,40],[24,40,54,32],[-45,-28,-28,20],[-70,10,-10,49]
+  [0,0,38,-18],[38,-18,73,-9],[0,0,-45,-28],[-45,-28,-70,10],[-28,20,-8,49],[-10,49,25,63],[18,-28,55,-46],[54,32,78,52],[58,70,24,63],[83,18,55,-46],[0,0,24,40],[24,40,54,32],[-45,-28,-28,20],[-70,10,-10,49],
+  [-70,10,-116,88],[-10,49,-116,88],[83,18,121,-86],[55,-46,121,-86],[-116,88,-132,25],[121,-86,110,-126],[-70,-25,-126,-54],[40,70,88,126]
 ];
 const SHELTERS=[
   {id:'hollow-log',name:'Hollow log',x:-35,z:-21,radius:4.3,type:'log'},
@@ -319,8 +332,12 @@ const SHELTERS=[
   {id:'flower-pot',name:'Broken flower pot',x:55,z:14,radius:3.8,type:'pot'},
   {id:'rock-crevice',name:'Rock crevice',x:52,z:-45,radius:3.4,type:'crevice'},
   {id:'bottle-cap',name:'Bottle-cap shelter',x:18,z:59,radius:3.4,type:'cap'},
+  {id:'fence-knot',name:'Fence-knot hollow',x:-126,z:28,radius:4.2,type:'log'},
+  {id:'compost-pot',name:'Compost pot shard',x:112,z:-119,radius:4.0,type:'pot'},
+  {id:'drain-stone',name:'Drainage stone',x:92,z:124,radius:3.9,type:'cave'},
+  {id:'mulch-cap',name:'Mulch bottle cap',x:-104,z:-96,radius:3.6,type:'cap'},
 ];
-const THICKETS=[[-24,-4,9],[12,18,10],[45,-4,12],[-55,35,11],[63,30,10],[-14,-48,13],[37,58,11],[-70,-25,10],[6,72,12],[76,-48,11],[-42,66,10],[28,-32,9],[-6,14,11],[20,42,12],[-24,46,14],[54,6,14],[68,-30,13],[-64,-42,12],[12,-56,11],[40,70,12]];
+const THICKETS=[[-24,-4,9],[12,18,10],[45,-4,12],[-55,35,11],[63,30,10],[-14,-48,13],[37,58,11],[-70,-25,10],[6,72,12],[76,-48,11],[-42,66,10],[28,-32,9],[-6,14,11],[20,42,12],[-24,46,14],[54,6,14],[68,-30,13],[-64,-42,12],[12,-56,11],[40,70,12],[-108,82,15],[-130,22,13],[-112,-76,16],[-72,-118,14],[-8,-126,17],[58,-112,15],[116,-82,17],[126,-16,14],[108,76,16],[76,124,15],[8,132,17],[-62,120,15]];
 
 function terrainHeight(x,z){
   return Math.sin(x*.064)*2.05+Math.cos(z*.054)*1.55+Math.sin((x+z)*.037)*1.1+Math.cos(Math.hypot(x+18,z-9)*.079)*.82-Math.exp(-((x-22)**2+(z+12)**2)/260)*2.7+Math.exp(-((x+34)**2+(z-26)**2)/330)*3.3;
@@ -338,7 +355,7 @@ class WorldBuilder{
   build(){this.#ground();this.#paths();this.#grass();this.#groundDetails();this.#entrances();this.#shelters();this.#plants();this.#structures();this.#rain();if(FEATURES.underground)this.#underground();return this;}
   addCollider(x,z,r,h=99){this.colliders.push({x,z,r,h});}
   collides(x,z,y=0){return this.colliders.some(c=>Math.hypot(x-c.x,z-c.z)<c.r&&y<c.h);}
-  #ground(){const geo=new THREE.PlaneGeometry(WORLD.radius*2,WORLD.radius*2,160,160);geo.rotateX(-Math.PI/2);const pos=geo.attributes.position,colors=[];for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i),h=terrainHeight(x,z);pos.setY(i,h);const n=.5+.5*Math.sin(x*.28+Math.sin(z*.2));colors.push(.19+n*.035,.12+n*.024,.07+n*.014);}geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geo.computeVertexNormals();const mat=new THREE.MeshStandardMaterial({vertexColors:true,roughness:1});this.ground=new THREE.Mesh(geo,mat);this.ground.receiveShadow=true;this.surfaceGroup.add(this.ground);}
+  #ground(){const segments=Math.round(WORLD.radius*1.4),geo=new THREE.PlaneGeometry(WORLD.radius*2,WORLD.radius*2,segments,segments);geo.rotateX(-Math.PI/2);const pos=geo.attributes.position,colors=[];for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i),h=terrainHeight(x,z);pos.setY(i,h);const n=.5+.5*Math.sin(x*.28+Math.sin(z*.2));colors.push(.19+n*.035,.12+n*.024,.07+n*.014);}geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geo.computeVertexNormals();const mat=new THREE.MeshStandardMaterial({vertexColors:true,roughness:1});this.ground=new THREE.Mesh(geo,mat);this.ground.receiveShadow=true;this.surfaceGroup.add(this.ground);}
   #paths(){for(const p of PATHS){const [ax,az,bx,bz]=p,segments=32,verts=[],indices=[];const dx=bx-ax,dz=bz-az,len=Math.hypot(dx,dz)||1,px=-dz/len,pz=dx/len;for(let i=0;i<=segments;i++){const t=i/segments,wobble=Math.sin(t*9+(ax+az)*.07)*.75+Math.sin(t*23+az*.04)*.22,cx=ax+dx*t+px*wobble,cz=az+dz*t+pz*wobble,half=1.35+Math.sin(t*13+ax)*.35;for(const side of [-1,1]){const x=cx+px*half*side,z=cz+pz*half*side;verts.push(x,terrainHeight(x,z)+.06,z);}}for(let i=0;i<segments;i++){const a=i*2;indices.push(a,a+2,a+1,a+1,a+2,a+3);}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geo.setIndex(indices);geo.computeVertexNormals();const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x64462d,roughness:1,polygonOffset:true,polygonOffsetFactor:-1}));mesh.receiveShadow=true;this.surfaceGroup.add(mesh);}}
   #grass(){const count=this.quality.grass,geo=new THREE.ConeGeometry(.052,1.8,5,1);geo.translate(0,.9,0);const mat=new THREE.MeshStandardMaterial({color:0x4f7d31,roughness:.92,side:THREE.DoubleSide});const mesh=new THREE.InstancedMesh(geo,mat,count);mesh.castShadow=this.quality.shadows;mesh.receiveShadow=true;const phases=new Float32Array(count),bends=new Float32Array(count),dummy=new THREE.Object3D();let placed=0,attempts=0;while(placed<count&&attempts<count*24){attempts++;let x,z;if(this.rng()<.76){const [cx,cz,r]=THICKETS[(this.rng()*THICKETS.length)|0];x=cx+gaussian(this.rng)*r*.54;z=cz+gaussian(this.rng)*r*.54;}else{x=(this.rng()-.5)*WORLD.radius*1.9;z=(this.rng()-.5)*WORLD.radius*1.9;}if(Math.hypot(x,z)>WORLD.radius-4||safeZoneAt(x,z))continue;let density=(.68+thicketDensity(x,z)*1.25)*pathDensity(x,z);density*=.78+.22*Math.sin(x*.23+z*.17);if(this.rng()>Math.min(1,density))continue;const roll=this.rng(),patch=thicketDensity(x,z);const h=(roll<.54?.48+this.rng()*1.25:roll<.86?1.35+this.rng()*2.25:3.2+this.rng()*3.8)*(1+Math.min(1.25,patch)*.28);const width=(roll<.54?.42+this.rng()*.55:roll<.86?.55+this.rng()*.75:.72+this.rng()*1.05);dummy.position.set(x,terrainHeight(x,z),z);dummy.scale.set(width,h,width*(.68+this.rng()*.62));dummy.rotation.y=this.rng()*Math.PI*2;dummy.rotation.x=(this.rng()-.5)*.08;dummy.rotation.z=(this.rng()-.5)*(.14+Math.min(1,patch)*.12);dummy.updateMatrix();mesh.setMatrixAt(placed,dummy.matrix);phases[placed]=this.rng()*Math.PI*2;bends[placed]=.25+this.rng()*.95;mesh.setColorAt(placed,new THREE.Color().setHSL(.245+this.rng()*.035,.43+this.rng()*.18,.24+this.rng()*.16));placed++;}mesh.count=placed;mesh.geometry.setAttribute('aPhase',new THREE.InstancedBufferAttribute(phases,1));mesh.geometry.setAttribute('aBend',new THREE.InstancedBufferAttribute(bends,1));mat.onBeforeCompile=shader=>{shader.uniforms.uTime={value:0};shader.uniforms.uWind={value:1};shader.vertexShader=`attribute float aPhase;attribute float aBend;uniform float uTime;uniform float uWind;\n${shader.vertexShader}`.replace('#include <begin_vertex>',`#include <begin_vertex>\nfloat bladeY=clamp(position.y/1.8,0.0,1.0);float localSway=sin(uTime*(0.58+aBend*.62)+aPhase)*(.055+aBend*.105);float gust=sin(uTime*.19+instanceMatrix[3].x*.041+instanceMatrix[3].z*.033)*.105;float cross=cos(uTime*.37+aPhase*1.73)*.05;transformed.x+=(localSway+gust)*bladeY*bladeY*uWind;transformed.z+=cross*bladeY*bladeY*uWind;`);this.shaderRefs.push(shader);};mat.customProgramCacheKey=()=>BUILD.version+'grass';this.grass=mesh;this.surfaceGroup.add(mesh);}
   #safeMarker(zone,color=0x72f2a0){const y=terrainHeight(zone.x,zone.z)+.14,group=new THREE.Group(),glowMat=new THREE.MeshBasicMaterial({color,transparent:true,opacity:.42,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}),ring=new THREE.Mesh(new THREE.RingGeometry(zone.radius*.96,zone.radius*1.16,48),glowMat);ring.rotation.x=-Math.PI/2;group.add(ring);const haloMat=new THREE.MeshBasicMaterial({color,transparent:true,opacity:.13,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}),halo=new THREE.Mesh(new THREE.CylinderGeometry(zone.radius*1.08,zone.radius*1.08,.55,48,1,true),haloMat);halo.position.y=.28;group.add(halo);group.position.set(zone.x,y,zone.z);this.surfaceGroup.add(group);this.safeMarkers.push({group,ring,halo,phase:this.rng()*Math.PI*2,base:zone.radius});}
@@ -363,11 +380,11 @@ class WorldBuilder{
     const detail=this.quality.detail||1,count=Math.floor(240*detail),rng=this.rng,dummy=new THREE.Object3D();this.flowers=[];
     const stems=new THREE.InstancedMesh(new THREE.CylinderGeometry(.025,.04,1,6),new THREE.MeshStandardMaterial({color:0x315f28,roughness:.9}),count);
     const heads=new THREE.InstancedMesh(new THREE.SphereGeometry(.18,8,5),new THREE.MeshStandardMaterial({color:0xd9b46d,roughness:.82,vertexColors:true}),count);
-    let placed=0,attempts=0;while(placed<count&&attempts<count*10){attempts++;const x=(rng()-.5)*205,z=(rng()-.5)*205;if(Math.hypot(x,z)>103||pathDistance(x,z)<2.2||safeZoneAt(x,z))continue;const h=.8+rng()*2.3,base=terrainHeight(x,z),scale=.75+rng()*1.25;dummy.position.set(x,base+h*.5,z);dummy.scale.set(scale,h,scale);dummy.rotation.set(0,rng()*Math.PI,(rng()-.5)*.08);dummy.updateMatrix();stems.setMatrixAt(placed,dummy.matrix);dummy.position.set(x,base+h,z);dummy.scale.set(scale*(.7+rng()*.45),scale*.35,scale*(.7+rng()*.45));dummy.rotation.set(0,rng()*Math.PI,0);dummy.updateMatrix();heads.setMatrixAt(placed,dummy.matrix);heads.setColorAt(placed,new THREE.Color().setHSL([.12,.96,.72,.16][placed%4],.55,.62));this.flowers.push({x,z,y:base+h});placed++;}
+    let placed=0,attempts=0;while(placed<count&&attempts<count*10){attempts++;const x=(rng()-.5)*WORLD.radius*1.9,z=(rng()-.5)*WORLD.radius*1.9;if(Math.hypot(x,z)>WORLD.radius-7||pathDistance(x,z)<2.2||safeZoneAt(x,z))continue;const h=.8+rng()*2.3,base=terrainHeight(x,z),scale=.75+rng()*1.25;dummy.position.set(x,base+h*.5,z);dummy.scale.set(scale,h,scale);dummy.rotation.set(0,rng()*Math.PI,(rng()-.5)*.08);dummy.updateMatrix();stems.setMatrixAt(placed,dummy.matrix);dummy.position.set(x,base+h,z);dummy.scale.set(scale*(.7+rng()*.45),scale*.35,scale*(.7+rng()*.45));dummy.rotation.set(0,rng()*Math.PI,0);dummy.updateMatrix();heads.setMatrixAt(placed,dummy.matrix);heads.setColorAt(placed,new THREE.Color().setHSL([.12,.96,.72,.16][placed%4],.55,.62));this.flowers.push({x,z,y:base+h});placed++;}
     stems.count=heads.count=placed;stems.instanceMatrix.needsUpdate=heads.instanceMatrix.needsUpdate=true;if(heads.instanceColor)heads.instanceColor.needsUpdate=true;stems.castShadow=heads.castShadow=false;this.surfaceGroup.add(stems,heads);
     const leafCount=Math.floor(3600*detail),leafGeo=new THREE.SphereGeometry(.12,6,4),leafMat=new THREE.MeshStandardMaterial({color:0x3e722f,roughness:.95,vertexColors:true}),leaves=new THREE.InstancedMesh(leafGeo,leafMat,leafCount);for(let i=0;i<leafCount;i++){const a=rng()*Math.PI*2,r=Math.sqrt(rng())*(WORLD.radius-4),x=Math.cos(a)*r,z=Math.sin(a)*r;if(safeZoneAt(x,z)){i--;continue;}dummy.position.set(x,terrainHeight(x,z)+.05+rng()*.08,z);dummy.scale.set(.7+rng()*1.8,.12+rng()*.22,.5+rng()*1.5);dummy.rotation.set((rng()-.5)*.35,rng()*Math.PI,(rng()-.5)*.35);dummy.updateMatrix();leaves.setMatrixAt(i,dummy.matrix);leaves.setColorAt(i,new THREE.Color().setHSL(.25+rng()*.05,.42+rng()*.2,.22+rng()*.18));}leaves.instanceMatrix.needsUpdate=true;if(leaves.instanceColor)leaves.instanceColor.needsUpdate=true;leaves.castShadow=false;this.surfaceGroup.add(leaves);this.plantInstanceCount=placed*2+leafCount;
   }
-  #structures(){const stone=new THREE.MeshStandardMaterial({color:0x696861,roughness:.96}),wood=new THREE.MeshStandardMaterial({color:0x806344,roughness:.9}),brick=new THREE.MeshStandardMaterial({color:0x87503e,roughness:.95});for(let i=0;i<120;i++){const a=this.rng()*Math.PI*2,r=8+this.rng()*102,x=Math.cos(a)*r,z=Math.sin(a)*r,s=.25+this.rng()*1.25,rock=new THREE.Mesh(new THREE.DodecahedronGeometry(s,1),stone);rock.position.set(x,terrainHeight(x,z)+s*.4,z);rock.scale.set(1.1,.65+this.rng()*.4,.95);rock.rotation.set(this.rng(),this.rng(),this.rng());rock.castShadow=true;this.surfaceGroup.add(rock);if(s>.9)this.addCollider(x,z,s*.7);if(FEATURES.climbing&&s>1.1)this.climbables.push({id:`rock-${i}`,x,z,radius:s*.75,height:s*1.4,type:'rock'});}
+  #structures(){const stone=new THREE.MeshStandardMaterial({color:0x696861,roughness:.96}),wood=new THREE.MeshStandardMaterial({color:0x806344,roughness:.9}),brick=new THREE.MeshStandardMaterial({color:0x87503e,roughness:.95});for(let i=0;i<170;i++){const a=this.rng()*Math.PI*2,r=8+this.rng()*(WORLD.radius-13),x=Math.cos(a)*r,z=Math.sin(a)*r,s=.25+this.rng()*1.25,rock=new THREE.Mesh(new THREE.DodecahedronGeometry(s,1),stone);rock.position.set(x,terrainHeight(x,z)+s*.4,z);rock.scale.set(1.1,.65+this.rng()*.4,.95);rock.rotation.set(this.rng(),this.rng(),this.rng());rock.castShadow=true;this.surfaceGroup.add(rock);if(s>.9)this.addCollider(x,z,s*.7);if(FEATURES.climbing&&s>1.1)this.climbables.push({id:`rock-${i}`,x,z,radius:s*.75,height:s*1.4,type:'rock'});}
     const board=new THREE.Mesh(new THREE.BoxGeometry(15,1.2,4),wood);board.position.set(68,terrainHeight(68,45)+.7,45);board.rotation.y=-.35;board.castShadow=true;this.surfaceGroup.add(board);this.addCollider(68,45,5.2,1.2);if(FEATURES.climbing)this.climbables.push({id:'board',x:68,z:45,radius:7.5,height:1.4,type:'board'});
     for(let i=0;i<7;i++){const x=-72+i*4.2,z=-58+Math.sin(i)*1.5,b=new THREE.Mesh(new THREE.BoxGeometry(3.4,2.2,2.2),brick);b.position.set(x,terrainHeight(x,z)+1.1,z);b.rotation.y=(this.rng()-.5)*.3;b.castShadow=true;this.surfaceGroup.add(b);this.addCollider(x,z,1.6,2.2);if(FEATURES.climbing)this.climbables.push({id:`brick-${i}`,x,z,radius:1.7,height:2.3,type:'brick'});}
   }
@@ -536,10 +553,10 @@ function sampleUndergroundRoute(points,distance){let total=0,lengths=[];for(let 
 class Simulation{
   constructor(scene,world,state,audio,quality){this.scene=scene;this.world=world;this.state=state;this.audio=audio;this.quality=quality;this.rng=mulberry32(BUILD.seed+97);this.events=[];this.foods=[];this.ants=[];this.flyers=[];this.predators=[];this.remotePlayers=new Map();this.networkActions=[];this.pheromones=[];this.pheromoneVisual=null;this.lastLifecycle=0;this.lastTrail=0;this.lastSnapshotTick=0;this.stats={alliedDelivered:0,rivalDelivered:0,deaths:0};this.disabledSubsystems=new Set();this.subsystemErrors=[];this.scheduler=new FixedRateScheduler({defaultBudgetMs:3.5,maxCatchUp:2});this.chunks=new ChunkActivity({cellSize:20,activeRadius:2,warmRadius:3});for(const [name,hz,options] of [['weather',2,{budgetMs:.6}],['player',30,{budgetMs:1.5,optional:false}],['combat',30,{budgetMs:1,optional:false}],['ants',BUILD.aiHz,{budgetMs:3.5,optional:false}],['flyers',BUILD.flyerHz,{budgetMs:2}],['spider',20,{budgetMs:1.5,optional:false}],['predators',BUILD.predatorHz,{budgetMs:2}],['lifecycle',BUILD.ecologyHz,{budgetMs:1}],['pheromones',BUILD.pheromoneHz,{budgetMs:2}],['visuals',30,{budgetMs:4,optional:false}],['collisions',30,{budgetMs:1.2,optional:false}]])this.scheduler.register(name,hz,options);this.#player();this.#food();this.#colonies();this.#spider();if(FEATURES.flyers){try{this.#flyers();}catch(error){console.error('Flyer initialization disabled',error);this.flyers=[];}}if(FEATURES.predatorEcology)this.#extraPredators();if(FEATURES.underground)this.#undergroundPopulation();if(FEATURES.pheromones)this.#pheromoneVisual();this.#missionSetup();}
   #player(){this.player={id:'player-local',x:6.2,z:0,y:terrainHeight(6.2,0),yaw:0,pitch:-.08,speed:0,stamina:100,alive:true,carrying:null,delivered:0,safe:null,underground:false,climb:null,vertical:0,entranceDwell:0,health:100,attackCooldown:0,attackFlash:0};this.playerRig=new AntRig('allied',1);this.scene.add(this.playerRig.root);}
-  #food(){const sites=[[-42,-8,'sugar'],[-68,28,'protein'],[39,-34,'seed'],[70,4,'sugar'],[33,65,'water'],[-17,72,'protein'],[82,-42,'seed'],[-75,-50,'water'],[10,35,'sugar'],[54,52,'protein'],[-48,52,'seed'],[25,-62,'water'],[68,76,'sugar'],[-6,-38,'protein'],[45,18,'sugar'],[-60,5,'protein'],[12,76,'water'],[84,32,'seed']];let i=0;for(const [x,z,type] of sites){const mesh=meshFood(type);mesh.position.set(x,terrainHeight(x,z)+.5,z);this.scene.add(mesh);this.foods.push({id:`food-${i++}`,x,z,type,amount:3+(this.rng()*5|0),mesh,reservedBy:null});}}
+  #food(){const sites=[[-42,-8,'sugar'],[-68,28,'protein'],[39,-34,'seed'],[70,4,'sugar'],[33,65,'water'],[-17,72,'protein'],[82,-42,'seed'],[-75,-50,'water'],[10,35,'sugar'],[54,52,'protein'],[-48,52,'seed'],[25,-62,'water'],[68,76,'sugar'],[-6,-38,'protein'],[45,18,'sugar'],[-60,5,'protein'],[12,76,'water'],[84,32,'seed'],[-123,67,'protein'],[-132,-38,'seed'],[-88,-121,'water'],[-18,-134,'sugar'],[64,-126,'protein'],[127,-58,'seed'],[132,42,'water'],[85,128,'sugar'],[12,137,'protein'],[-72,119,'seed']];let i=0;for(const [x,z,type] of sites){const mesh=meshFood(type);mesh.position.set(x,terrainHeight(x,z)+.5,z);this.scene.add(mesh);this.foods.push({id:`food-${i++}`,x,z,type,amount:3+(this.rng()*5|0),mesh,reservedBy:null});}}
   #colonies(){const count=this.quality.antsPerColony;for(const species of ['allied','rival']){const entries=species==='allied'?ALLIED_ENTRANCES:RIVAL_ENTRANCES;for(let i=0;i<count;i++){const home=entries[i%entries.length],rig=new AntRig(species,.82);this.scene.add(rig.root);const a={id:`${species}-worker-${i}`,species,homeId:home.id,x:home.x+(this.rng()-.5)*2,z:home.z+(this.rng()-.5)*2,yaw:this.rng()*Math.PI*2,speed:0,state:'forage',target:null,carrying:null,alive:true,respawn:0,hideTimer:0,trailTimer:this.rng(),hp:3,attackCooldown:0,aggroTimer:0,rig};this.ants.push(a);}this.state.colony[species].population=count;}}
   #spider(){this.spiderRig=new SpiderRig();this.scene.add(this.spiderRig.root);this.spider={id:'predator-spider',type:'spider',x:64,z:-18,yaw:Math.PI,state:'patrol',speed:0,target:null,targetX:-10,targetZ:-50,searchTimer:0,retreatTimer:0,stun:0,avoidEntrance:null,avoidTimer:0,rig:this.spiderRig};}
-  #flyers(){const total=this.quality.flyers,bees=Math.floor(total*.42);for(let i=0;i<total;i++){const type=i<bees?'bee':'fly',rig=new FlyerRig(type);this.scene.add(rig.root);const f={id:`${type}-${i}`,type,x:(this.rng()-.5)*170,z:(this.rng()-.5)*170,y:5+this.rng()*8,state:type==='bee'?'flower':'food',target:null,phase:this.rng()*10,rig,stun:0,hp:type==='bee'?2:1,aggroTimer:0,stingCooldown:0};this.flyers.push(f);}}
+  #flyers(){const total=this.quality.flyers,bees=Math.floor(total*.42);for(let i=0;i<total;i++){const type=i<bees?'bee':'fly',rig=new FlyerRig(type);this.scene.add(rig.root);const f={id:`${type}-${i}`,type,x:(this.rng()-.5)*WORLD.radius*1.6,z:(this.rng()-.5)*WORLD.radius*1.6,y:5+this.rng()*8,state:type==='bee'?'flower':'food',target:null,phase:this.rng()*10,rig,stun:0,hp:type==='bee'?2:1,aggroTimer:0,stingCooldown:0};this.flyers.push(f);}}
   #extraPredators(){const centRig=new CentipedeRig();this.scene.add(centRig.root);this.centipede={id:'predator-centipede',type:'centipede',x:-74,z:30,yaw:0,state:'roam',target:null,speed:2.4,rig:centRig};const antRig=new AntlionRig();this.scene.add(antRig.root);this.antlion={id:'predator-antlion',type:'antlion',x:36,z:72,radius:5.2,rig:antRig,cooldown:0};this.predators.push(this.centipede,this.antlion);const shadow=new THREE.Mesh(new THREE.CircleGeometry(5,24),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.28,depthWrite:false}));shadow.rotation.x=-Math.PI/2;this.scene.add(shadow);this.bird={id:'predator-bird',type:'bird',x:-120,z:-80,active:false,timer:12,shadow};this.predators.push(this.bird);}
   #brood(){this.broodGroup=new THREE.Group();const eggMat=new THREE.MeshStandardMaterial({color:0xf1e5bd,roughness:.65}),larvaMat=new THREE.MeshStandardMaterial({color:0xe8d9b6,roughness:.75}),pupaMat=new THREE.MeshStandardMaterial({color:0xcda978,roughness:.82});for(let i=0;i<12;i++){const type=i<4?'egg':i<8?'larva':'pupa',mat=type==='egg'?eggMat:type==='larva'?larvaMat:pupaMat,mesh=new THREE.Mesh(type==='egg'?new THREE.SphereGeometry(.24,10,6):new THREE.CapsuleGeometry(.18,.45,5,8),mat);mesh.position.set(25+(i%4)*.6,-9.4,-14+Math.floor(i/4)*.7);mesh.scale.set(type==='egg'?.75:1.2,type==='egg'?1.15:.8,.8);mesh.userData.type=type;this.broodGroup.add(mesh);}this.scene.add(this.broodGroup);}
 
@@ -579,7 +596,7 @@ class Simulation{
     let f=input.forward,s=input.strafe,l=Math.hypot(f,s)||1;f/=l;s/=l;const sprint=input.sprint&&p.stamina>2&&!p.carrying,speed=6.2*(sprint?1.65:1)*(p.carrying?.72:1)*(1-this.state.weather.mud*.3)*(1+(this.state.progression.sprint-1)*.5);p.stamina=clamp(p.stamina+(sprint&&(f||s)?-25:17)*dt,0,100);const vx=(Math.cos(p.yaw)*f+Math.cos(p.yaw+Math.PI/2)*s)*speed,vz=(Math.sin(p.yaw)*f+Math.sin(p.yaw+Math.PI/2)*s)*speed,nx=p.x+vx*dt,nz=p.z+vz*dt;if(p.underground){const constrained=undergroundConstraint(nx,nz,.82);p.x=constrained.x;p.z=constrained.z;p.undergroundNav=constrained;}else{if(!this.world.collides(nx,p.z,p.vertical))p.x=clamp(nx,-WORLD.radius+2,WORLD.radius-2);if(!this.world.collides(p.x,nz,p.vertical))p.z=clamp(nz,-WORLD.radius+2,WORLD.radius-2);}p.speed=Math.hypot(vx,vz);p.vertical=Math.max(0,p.vertical-dt*5);
     if(FEATURES.climbing&&input.jump){const obj=this.world.climbables.find(c=>dist2(p.x,p.z,c.x,c.z)<c.radius+1.1);if(obj){p.climb={object:obj,height:Math.max(.2,p.vertical)};this.events.push({type:'climb-start'});}}
     this.#interaction(input);const safeAfter=this.currentSafeZone();if(safeBefore&&!safeAfter)this.#missionEvent('left-entrance');const rival=nearestEntrance(p.x,p.z,'rival');if(rival.distance<5)this.#missionEvent('rival-visit');}
-  #combatUpdate(dt,time,input){const p=this.player;p.attackCooldown=Math.max(0,p.attackCooldown-dt);p.attackFlash=Math.max(0,p.attackFlash-dt);if(!input.attack||p.attackCooldown>0||p.underground||!p.alive)return;p.attackCooldown=.42;p.attackFlash=.18;const fx=Math.cos(p.yaw),fz=Math.sin(p.yaw);let target=null,best=3.1;for(const e of [...this.ants.filter(a=>a.alive&&a.species==='rival'),...this.flyers.filter(f=>f.type==='bee'&&f.stun<=0),this.spider]){const dx=e.x-p.x,dz=e.z-p.z,d=Math.hypot(dx,dz);if(d>best||((dx*fx+dz*fz)/(d||1))<.2)continue;target=e;best=d;}if(!target)return;if(target===this.spider){target.stun=Math.max(target.stun,.25);target.state='attack';target.target=p;this.events.push({type:'bite-hit',target:'spider'});return;}target.hp=(target.hp??2)-1;target.aggroTimer=12;if(target.type==='bee'){for(const bee of this.flyers)if(bee.type==='bee'){bee.aggroTimer=14;bee.target=p;bee.state='swarm';}this.events.push({type:'bee-swarm'});}else{for(const ant of this.ants)if(ant.species==='rival'&&dist2(ant.x,ant.z,target.x,target.z)<24){ant.aggroTimer=12;ant.target=p;ant.state='attack-player';}this.events.push({type:'bite-hit',target:'rival-ant'});}if(target.hp<=0){if(target.type==='bee'){target.stun=10;target.rig.root.visible=false;}else this.#killPrey(target,'player-bite');}}
+  #combatUpdate(dt,time,input){const p=this.player;p.attackCooldown=Math.max(0,p.attackCooldown-dt);p.attackFlash=Math.max(0,p.attackFlash-dt);if(!input.attack||p.attackCooldown>0||p.underground||!p.alive)return;p.attackCooldown=.42;p.attackFlash=.18;let target=null,best=Infinity;for(const e of [...this.ants.filter(a=>a.alive&&a.species==='rival'),...this.flyers.filter(f=>f.type==='bee'&&f.stun<=0),this.spider]){const d=dist2(e.x,e.z,p.x,p.z),reach=e===this.spider?19:3.1;if(d>reach||d>=best)continue;target=e;best=d;}if(!target)return;if(target===this.spider){target.stun=Math.max(target.stun,1.2);target.state='stunned';target.target=null;this.events.push({type:'bite-hit',target:'spider'});return;}target.hp=(target.hp??2)-1;target.aggroTimer=12;if(target.type==='bee'){for(const bee of this.flyers)if(bee.type==='bee'){bee.aggroTimer=14;bee.target=p;bee.state='swarm';}this.events.push({type:'bee-swarm'});}else{for(const ant of this.ants)if(ant.species==='rival'&&dist2(ant.x,ant.z,target.x,target.z)<24){ant.aggroTimer=12;ant.target=p;ant.state='attack-player';}this.events.push({type:'bite-hit',target:'rival-ant'});}if(target.hp<=0){if(target.type==='bee'){target.stun=10;target.rig.root.visible=false;}else this.#killPrey(target,'player-bite');}}
   #enterUnderground(entry){const p=this.player;p.returnEntrance=entry;p.underground=true;p.x=0;p.z=0;p.vertical=0;p.entranceDwell=0;this.world.setUnderground(true);this.events.push({type:'underground',entrance:entry});}
   #returnSurface(){const p=this.player;p.underground=false;p.x=(p.returnEntrance?.x||0)+Math.cos(p.yaw)*5.2;p.z=(p.returnEntrance?.z||0)+Math.sin(p.yaw)*5.2;p.vertical=0;p.entranceDwell=0;this.world.setUnderground(false);this.events.push({type:'surface',entrance:p.returnEntrance});}
   #interaction(input){const p=this.player;if(FEATURES.underground){if(p.underground&&Math.hypot(p.x,p.z)<5.5&&input.interact){this.#returnSurface();return;}const near=nearestEntrance(p.x,p.z,'allied');if(!p.underground&&near.entry){const enterRadius=near.entry.radius+3.2;if(near.distance<enterRadius){p.entranceDwell=near.distance<near.entry.radius*.72?p.entranceDwell+1/BUILD.simulationHz:0;if(input.interact||p.entranceDwell>.65){this.#enterUnderground(near.entry);return;}}else p.entranceDwell=0;}}if(!input.interact)return;
@@ -601,16 +618,16 @@ class Simulation{
     if(s.avoidTimer>0)s.avoidTimer-=dt;else s.avoidEntrance=null;const prey=this.#allPrey();let nearest=null,d=Infinity;for(const p of prey){const pd=dist2(s.x,s.z,p.x,p.z);if(pd<d){nearest=p;d=pd;}}const detect=78*this.state.weather.detection;if(!s.stun&&s.state!=='retreat'&&nearest&&d<detect){if(s.target?.species==='allied'&&nearest===this.player)this.#missionEvent('worker-rescue');s.target=nearest;s.state=d<18?'attack':'hunt';}
     if(s.target&&entitySafe(s.target)){const zone=safeZoneAt(s.target.x,s.target.z);s.state='search';s.targetX=zone?.x??s.target.x;s.targetZ=zone?.z??s.target.z;s.searchTimer+=dt;if(s.searchTimer>5.5){s.state='retreat';s.retreatTimer=6;s.avoidEntrance=zone?.id;s.avoidTimer=12;s.target=null;}}
     if(s.state==='retreat'){s.retreatTimer-=dt;if(s.retreatTimer<=0){s.state='patrol';s.target=null;this.#chooseSpiderPatrol();}}
-    if(s.state==='patrol'&&dist2(s.x,s.z,s.targetX,s.targetZ)<5)this.#chooseSpiderPatrol();const tx=s.target&&!entitySafe(s.target)?s.target.x:s.targetX,tz=s.target&&!entitySafe(s.target)?s.target.z:s.targetZ,desired=Math.atan2(tz-s.z,tx-s.x),old=s.yaw;s.yaw=turnToward(s.yaw,desired,dt*(s.state==='attack'?1.5:.75));let speed=s.state==='attack'?6.3:s.state==='hunt'?4.7:s.state==='search'?1.2:s.state==='retreat'?5.2:2.0;if(s.stun>0)speed=0;s.speed=speed;s.x+=Math.cos(s.yaw)*speed*dt;s.z+=Math.sin(s.yaw)*speed*dt;s.x=clamp(s.x,-103,103);s.z=clamp(s.z,-103,103);const groundNormal=terrainNormal(s.x,s.z);s.rig.update(time,{speed,turn:angleDelta(old,s.yaw),state:s.state,groundNormal});this.#placeSurfaceRig(s.rig,s.x,s.z,s.yaw,0,true);for(const step of s.rig.lastSteps){const dPlayer=dist2(s.x,s.z,this.player.x,this.player.z);this.events.push({type:'spider-step',distance:dPlayer,pursuing:['hunt','attack'].includes(s.state),pan:clamp(Math.sin(Math.atan2(s.z-this.player.z,s.x-this.player.x)-this.player.yaw),-1,1)});}
+    if(s.state==='patrol'&&dist2(s.x,s.z,s.targetX,s.targetZ)<5)this.#chooseSpiderPatrol();const tx=s.target&&!entitySafe(s.target)?s.target.x:s.targetX,tz=s.target&&!entitySafe(s.target)?s.target.z:s.targetZ,desired=Math.atan2(tz-s.z,tx-s.x),old=s.yaw;s.yaw=turnToward(s.yaw,desired,dt*(s.state==='attack'?1.5:.75));let speed=s.state==='attack'?6.3:s.state==='hunt'?4.7:s.state==='search'?1.2:s.state==='retreat'?5.2:2.0;if(s.stun>0)speed=0;s.speed=speed;s.x+=Math.cos(s.yaw)*speed*dt;s.z+=Math.sin(s.yaw)*speed*dt;const edge=WORLD.radius-7;s.x=clamp(s.x,-edge,edge);s.z=clamp(s.z,-edge,edge);const groundNormal=terrainNormal(s.x,s.z);s.rig.update(time,{speed,turn:angleDelta(old,s.yaw),state:s.state,groundNormal});this.#placeSurfaceRig(s.rig,s.x,s.z,s.yaw,0,true);for(const step of s.rig.lastSteps){const dPlayer=dist2(s.x,s.z,this.player.x,this.player.z);this.events.push({type:'spider-step',distance:dPlayer,pursuing:['hunt','attack'].includes(s.state),pan:clamp(Math.sin(Math.atan2(s.z-this.player.z,s.x-this.player.x)-this.player.yaw),-1,1)});}
   }
-  #chooseSpiderPatrol(){for(let tries=0;tries<20;tries++){const x=(this.rng()-.5)*180,z=(this.rng()-.5)*180;if(Math.hypot(x,z)>100||nearestEntrance(x,z).distance<16)continue;this.spider.targetX=x;this.spider.targetZ=z;return;}}
+  #chooseSpiderPatrol(){for(let tries=0;tries<20;tries++){const x=(this.rng()-.5)*WORLD.radius*1.8,z=(this.rng()-.5)*WORLD.radius*1.8;if(Math.hypot(x,z)>WORLD.radius-10||nearestEntrance(x,z).distance<16)continue;this.spider.targetX=x;this.spider.targetZ=z;return;}}
   #flyerUpdate(dt,time){for(const f of this.flyers){if(!this.chunks.isWarm(f.x,f.z)&&f.state!=='swarm'&&f.state!=='sting'){f.rig.root.visible=false;continue;}if(f.stun>0){f.stun-=dt;f.rig.root.visible=false;continue;}f.rig.root.visible=true;const spiderD=dist2(f.x,f.z,this.spider.x,this.spider.z);if(spiderD<24){f.state='evade';f.target={x:f.x+(f.x-this.spider.x)*2,z:f.z+(f.z-this.spider.z)*2,y:13};}else if(f.type==='bee'){f.aggroTimer=Math.max(0,(f.aggroTimer||0)-dt);if(f.aggroTimer>0&&!this.player.underground){f.state='swarm';f.target=this.player;}const threatened=this.ants.find(a=>a.alive&&a.species==='allied'&&dist2(a.x,a.z,this.spider.x,this.spider.z)<22);if(f.aggroTimer<=0&&threatened&&this.rng()<dt*.35){f.state='sting';f.target=this.spider;}else if((!f.target||f.state==='sting')&&f.aggroTimer<=0){f.state='flower';f.target=choose(this.rng,this.world.flowers)||{x:0,z:0,y:5};}}else{const carrier=[this.player,...this.ants].find(a=>a.carrying&&a.alive!==false&&dist2(a.x,a.z,f.x,f.z)<35);if(carrier){f.state='follow';f.target=carrier;if(dist2(carrier.x,carrier.z,this.spider.x,this.spider.z)<55&&this.rng()<dt*.5){this.spider.target=carrier;this.spider.state='hunt';}}else if(!f.target||f.target.amount<=0){f.state='food';f.target=nearestActiveFood(this.foods,f.x,f.z).food;}}
       const tx=f.target?.x??0,tz=f.target?.z??0,ty=f.target?.y??(f.type==='bee'?4.5:3.2),dx=tx-f.x,dz=tz-f.z,d=Math.hypot(dx,dz)||1,speed=f.type==='bee'?7.5:9.2;f.x+=dx/d*speed*dt;f.z+=dz/d*speed*dt;f.y+=(ty+Math.sin(time*4+f.phase)*.45-f.y)*dt*2.8;if(f.state==='swarm'&&dist2(f.x,f.z,this.player.x,this.player.z)<1.7){f.stingCooldown=Math.max(0,f.stingCooldown-dt);if(f.stingCooldown<=0){f.stingCooldown=1.1;this.player.health-=12;this.events.push({type:'player-stung'});if(this.player.health<=0)this.#killPrey(this.player,'bee-swarm');}}if(f.state==='sting'&&dist2(f.x,f.z,this.spider.x,this.spider.z)<3.5){this.spider.stun=2.8;this.spider.state='stunned';f.state='evade';f.target={x:f.x-10,z:f.z+8,y:12};this.audio.sting();this.events.push({type:'bee-sting'});}if(this.state.weather.rain>.6)f.y+=(10-f.y)*dt;f.rig.root.position.set(f.x,terrainHeight(f.x,f.z)+f.y,f.z);f.rig.root.lookAt(tx,terrainHeight(tx,tz)+ty,tz);f.rig.update(time,speed);}}
   #predatorUpdate(dt,time){const c=this.centipede,prey=this.#allPrey().filter(p=>!p.underground);let target=null,d=Infinity;for(const p of prey){const q=dist2(c.x,c.z,p.x,p.z);if(q<d){target=p;d=q;}}if(target&&d<38)c.target=target;if(c.target&&entitySafe(c.target))c.target=null;const tx=c.target?.x??-65,tz=c.target?.z??40,desired=Math.atan2(tz-c.z,tx-c.x);c.yaw=turnToward(c.yaw,desired,dt*1.8);c.x+=Math.cos(c.yaw)*c.speed*dt;c.z+=Math.sin(c.yaw)*c.speed*dt;c.rig.update(time,c.speed);this.#placeSurfaceRig(c.rig,c.x,c.z,c.yaw,0,true);
     const a=this.antlion;a.cooldown=Math.max(0,a.cooldown-dt);const nearby=prey.find(p=>dist2(p.x,p.z,a.x,a.z)<a.radius);a.rig.root.position.set(a.x,terrainHeight(a.x,a.z),a.z);a.rig.update(time,!!nearby);if(nearby&&a.cooldown<=0){this.#killPrey(nearby,'antlion');a.cooldown=4;}
-    const b=this.bird;b.timer-=dt;if(b.timer<=0){b.active=!b.active;b.timer=b.active?7:14+this.rng()*15;if(b.active){b.x=-110;b.z=-70+this.rng()*140;}}if(b.active){b.x+=32*dt;b.z+=Math.sin(time*.8)*3*dt;const y=terrainHeight(b.x,b.z)+.12;b.shadow.visible=true;b.shadow.position.set(b.x,y,b.z);for(const p of prey)if(dist2(p.x,p.z,b.x,b.z)<4.5)this.#killPrey(p,'bird');if(b.x>110)b.active=false;}else b.shadow.visible=false;}
+    const b=this.bird;b.timer-=dt;if(b.timer<=0){b.active=!b.active;b.timer=b.active?9:14+this.rng()*15;if(b.active){b.x=-WORLD.radius;b.z=(this.rng()-.5)*WORLD.radius*1.4;}}if(b.active){b.x+=32*dt;b.z+=Math.sin(time*.8)*3*dt;const y=terrainHeight(b.x,b.z)+.12;b.shadow.visible=true;b.shadow.position.set(b.x,y,b.z);for(const p of prey)if(dist2(p.x,p.z,b.x,b.z)<4.5)this.#killPrey(p,'bird');if(b.x>WORLD.radius)b.active=false;}else b.shadow.visible=false;}
   #killPrey(p,source){if(p===this.player){if(this.currentSafeZone())return;this.player.alive=false;this.state.lost=true;this.events.push({type:'player-death',source});}else{p.alive=false;p.rig.root.visible=false;p.respawn=7+this.rng()*6;p.carrying=null;this.stats.deaths++;if(FEATURES.pheromones){this.#dropPheromone(p.species,'danger',p.x,p.z,1.5);this.#dropPheromone(p.species,'dead',p.x,p.z,1.2);}this.events.push({type:'worker-death',source,id:p.id});}}
-  #collisions(){const prey=this.#allPrey();for(const p of prey){if(dist2(p.x,p.z,this.spider.x,this.spider.z)<17&&!entitySafe(p))this.#killPrey(p,'spider');if(FEATURES.predatorEcology&&this.centipede?.target===p&&dist2(p.x,p.z,this.centipede.x,this.centipede.z)<1.7)this.#killPrey(p,'centipede');}}
+  #collisions(){const prey=this.#allPrey();for(const p of prey){if(this.spider.stun<=0&&dist2(p.x,p.z,this.spider.x,this.spider.z)<17&&!entitySafe(p))this.#killPrey(p,'spider');if(FEATURES.predatorEcology&&this.centipede?.target===p&&dist2(p.x,p.z,this.centipede.x,this.centipede.z)<1.7)this.#killPrey(p,'centipede');}}
   #lifecycle(dt,time){if(time-this.lastLifecycle<1)return;const elapsed=time-this.lastLifecycle;this.lastLifecycle=time;for(const species of ['allied','rival']){const c=this.state.colony[species];const workers=this.ants.filter(a=>a.species===species&&a.alive).length;c.population=workers;c.sugar=Math.max(0,c.sugar-workers*.018*elapsed);c.protein=Math.max(0,c.protein-c.larvae*.025*elapsed);c.water=Math.max(0,c.water-workers*.012*elapsed);const shortage=(c.sugar<=0?1:0)+(c.protein<=0?1:0)+(c.water<=0?1:0);c.hunger=clamp(c.hunger+(shortage*.9-.35)*elapsed,0,100);c.health=clamp(c.health+(shortage?-1.1:.25)*elapsed,0,100);if(c.protein>3&&c.sugar>3&&this.rng()<.08*elapsed)c.eggs++;if(c.eggs>0&&this.rng()<.07*elapsed){c.eggs--;c.larvae++;}if(c.larvae>0&&c.protein>0&&this.rng()<.05*elapsed){c.larvae--;c.pupae++;}if(c.pupae>0&&this.rng()<.045*elapsed){c.pupae--;const dead=this.ants.find(a=>a.species===species&&!a.alive);if(dead){dead.respawn=.2;}else c.health=Math.min(100,c.health+1);}}
     if(this.broodGroup){const c=this.state.colony.allied;let egg=0,larva=0,pupa=0;for(const m of this.broodGroup.children){const count=FEATURES.lifecycle?(m.userData.type==='egg'?c.eggs:m.userData.type==='larva'?c.larvae:c.pupae):99,index=m.userData.type==='egg'?egg++:m.userData.type==='larva'?larva++:pupa++;m.visible=index<count;m.scale.y=.8+Math.sin(time*2+index)*.04;}for(const g of this.storageMeshes||[]){const amount=c[g.userData.type==='seed'?'sugar':g.userData.type]||0;g.children.forEach((m,i)=>m.visible=i<Math.min(8,Math.ceil(amount)));}}
   }
@@ -657,7 +674,8 @@ class Game{
   }
   #lights(){this.hemi=new THREE.HemisphereLight(0xdce9c8,0x3a2b1d,1.75);this.scene.add(this.hemi);this.sun=new THREE.DirectionalLight(0xffedb6,3.25);this.sun.position.set(-35,55,20);this.sun.castShadow=this.quality.shadows;this.sun.shadow.mapSize.set(1024,1024);this.sun.shadow.camera.left=-100;this.sun.shadow.camera.right=100;this.sun.shadow.camera.top=100;this.sun.shadow.camera.bottom=-100;this.sun.shadow.camera.near=.5;this.sun.shadow.camera.far=190;this.scene.add(this.sun);this.fill=new THREE.DirectionalLight(0x91afd0,.42);this.fill.position.set(42,24,-36);this.scene.add(this.fill);this.undergroundLight=new THREE.PointLight(0xd9a76a,0,65,2);this.undergroundLight.position.set(0,-2,0);this.scene.add(this.undergroundLight);}
   #firstPersonRig(){this.fpRig=new THREE.Group();const mat=new THREE.MeshStandardMaterial({color:0x2c1b13,roughness:.65,depthTest:false,depthWrite:false});for(const side of [-1,1]){const p=new THREE.Group();p.position.set(side*.32,-.26,-.70);const a=new THREE.Mesh(new THREE.CylinderGeometry(.008,.014,.58,6),mat);a.rotation.x=Math.PI/2;a.rotation.z=side*.24;a.position.z=-.28;a.renderOrder=30;p.add(a);const b=new THREE.Mesh(new THREE.CylinderGeometry(.006,.010,.42,6),mat);b.rotation.x=Math.PI/2;b.rotation.z=side*.18;b.position.set(side*.1,.01,-.65);b.renderOrder=30;p.add(b);this.fpRig.add(p);}this.camera.add(this.fpRig);this.scene.add(this.camera);}
-  start(){if(this.running)return;this.running=true;this.state.started=true;this.audio.init();this.audio.ctx?.resume?.();this.renderer.domElement.focus();this.last=performance.now();requestAnimationFrame(t=>this.#loop(t));this.#toast('Click the yard to capture the mouse');}
+  refreshUi(){this.#immersiveUi();}
+  start(){if(this.running)return;this.running=true;this.state.started=true;this.audio.init();this.audio.ctx?.resume?.();this.renderer.domElement.focus();this.last=performance.now();this.uiTimer=setInterval(()=>this.#immersiveUi(),100);this.#immersiveUi();requestAnimationFrame(t=>this.#loop(t));this.#toast('Click the yard to capture the mouse');}
   #loop(now){if(!this.running)return;requestAnimationFrame(t=>this.#loop(t));this.frameCount++;this.lastFrameAt=now;const frameDt=document.hidden?0:Math.min(.033,Math.max(0,(now-this.last)/1000));this.last=now;if(this.state.paused||this.contextLost)return;try{this.accumulator=Math.min(.12,this.accumulator+frameDt);let steps=0;while(this.accumulator>=this.fixed&&steps<3){const toggles=this.input.consumeToggles();this.#toggles(toggles);const command=this.input.command();this.sim.update(this.fixed,this.state.tick*this.fixed,command);this.network.update(this.fixed);this.accumulator-=this.fixed;steps++;}if(steps===3)this.accumulator=0;}catch(error){this.#recover('simulation',error);return;}this.#safeFrame('events',()=>this.#events());this.#safeFrame('environment',()=>this.#environment(now/1000,frameDt));this.#safeFrame('camera',()=>this.#camera(frameDt,now/1000));this.#safeFrame('hud',()=>this.#hud(frameDt));this.#safeFrame('minimap',()=>this.#minimap());try{this.renderer.render(this.scene,this.camera);this.renderErrors=0;}catch(error){this.renderErrors=(this.renderErrors||0)+1;this.#recover('render',error);if(this.renderErrors>=2)this.world?.setEmergencyQuality?.();}this.#safeFrame('performance',()=>this.#performance(frameDt));}
   #safeFrame(name,fn){this.disabledSystems??=new Set();if(this.disabledSystems.has(name))return;try{fn();}catch(error){this.runtimeErrors.push({name,message:String(error?.message||error),time:performance.now()});if(this.runtimeErrors.length>20)this.runtimeErrors.shift();this.disabledSystems.add(name);console.error(`ANTBOUND ${name} failure`,error);this.#toast(`${name} disabled: ${error?.message||error}`);if(name==='minimap'&&this.mapWrap){this.mapWrap.dataset.status='error';this.mapWrap.style.setProperty('display','block','important');}if(name==='environment')this.world?.setEmergencyQuality?.();}}
   #recover(name,error){this.runtimeErrors.push({name,message:String(error?.message||error),time:performance.now()});if(this.runtimeErrors.length>20)this.runtimeErrors.shift();console.error(`ANTBOUND ${name} failure`,error);this.#toast(`${name} recovered — effects reduced`);this.world?.setEmergencyQuality?.();this.accumulator=0;}
@@ -667,6 +685,34 @@ class Game{
   #environment(time,dt){const w=this.state.weather;this.world.update(time,w,this.sim.player);this.sun.position.x=-35+Math.sin(time*.045)*8;this.sun.position.z=20+Math.cos(time*.038)*6;this.sun.intensity=(3.12+.15*Math.sin(time*.11))*(1-w.darkness*.72)+w.lightning*8;this.hemi.intensity=1.75*(1-w.darkness*.45)+w.lightning*2.5;this.fill.intensity=.42*(1-w.darkness*.35);this.renderer.toneMappingExposure=(1.06+.02*Math.sin(time*.13))*(1-w.darkness*.32)+w.lightning*.5;this.scene.fog.density=this.sim.player.underground?.024:(.0115+w.rain*.009);this.scene.background.set(this.sim.player.underground?0x17100c:0x9fb58d);this.undergroundLight.intensity=this.sim.player.underground?2.2:0;const near=nearestEntrance(this.sim.player.x,this.sim.player.z,'allied');this.audio.update({wind:w.wind,rain:w.rain,underground:this.sim.player.underground,nearColony:near.distance<12||this.sim.player.underground});if(this.sim.player.speed>1){this.stepTimer=(this.stepTimer||0)-dt;if(this.stepTimer<=0){this.audio.playerStep(this.input.keys.has('ShiftLeft'));this.stepTimer=this.input.keys.has('ShiftLeft')?.11:.17;}}}
   #camera(dt,time){this.cameraTransition=Math.max(0,this.cameraTransition-dt);const p=this.sim.player,rig=this.sim.playerRig;const horizontal=this.state.cameraMode==='first'?112:88;this.camera.fov+=(clamp(verticalFov(horizontal,this.camera.aspect),48,102)-this.camera.fov)*(1-Math.pow(.00008,dt));this.camera.updateProjectionMatrix();const y=p.underground?-8.75:terrainHeight(p.x,p.z)+.95+p.vertical,forward=new THREE.Vector3(Math.cos(p.yaw),0,Math.sin(p.yaw));if(this.state.cameraMode==='first'){rig.root.visible=false;this.fpRig.visible=true;const eye=new THREE.Vector3(p.x,y,p.z).addScaledVector(forward,.32);this.camera.position.lerp(eye,1-Math.pow(.00002,dt));this.camera.rotation.order='YXZ';this.camera.rotation.y=-p.yaw-Math.PI/2;this.camera.rotation.x=p.pitch;this.camera.rotation.z=0;for(const [i,a] of this.fpRig.children.entries()){a.rotation.y=Math.sin(time*2.5+i)*.06;a.rotation.x=Math.sin(time*3.1+i)*.02;}}else{rig.root.visible=true;this.fpRig.visible=false;const orbitPitch=clamp(p.pitch,-.48,.42),distance=9.6,horizontalDistance=Math.cos(orbitPitch)*distance;const desired=new THREE.Vector3(p.x,y+2.15+Math.sin(orbitPitch)*5.0,p.z).addScaledVector(forward,-horizontalDistance);if(!p.underground)desired.y=Math.max(desired.y,terrainHeight(desired.x,desired.z)+1.25);const follow=1-Math.pow(.00035,dt);this.camera.position.lerp(desired,follow);const look=new THREE.Vector3(p.x,y+.35,p.z).addScaledVector(forward,1.55);this.camera.up.set(0,1,0);this.camera.lookAt(look);}this.#shake(dt,time);}
   #shake(dt,time){if(this.shake.time<=0)return;this.shake.time-=dt;this.shake.strength*=Math.pow(.028,dt);const s=this.shake.strength,phase=time*42+this.shake.phase;this.camera.position.x+=Math.sin(phase*1.13)*s*.18;this.camera.position.y+=Math.sin(phase*1.73)*s*.24;this.camera.position.z+=Math.cos(phase*.91)*s*.14;this.camera.rotation.x+=Math.sin(phase*.82)*s*.012;this.camera.rotation.z+=Math.cos(phase*1.31)*s*.018;}
+  #immersiveUi(){
+    const p=this.sim.player,zone=this.sim.currentSafeZone(),spiderD=dist2(p.x,p.z,this.sim.spider.x,this.sim.spider.z),danger=zone?0:clamp((92-spiderD)/92*100,0,100);
+    this.staminaHudVisible=p.stamina<72||(this.staminaHudVisible&&p.stamina<98);
+    document.body.classList.toggle('ui-in-motion',p.speed>.8);
+    document.body.classList.toggle('low-stamina',Boolean(this.staminaHudVisible));
+    document.body.classList.toggle('ui-alert',danger>32||p.health<55);
+    touchControls.setContext(this.state.lost||this.state.won?null:this.#contextAction());
+  }
+  #contextAction(){
+    const p=this.sim.player;
+    if(p.underground&&Math.hypot(p.x,p.z)<5.5)return{kind:'interact',label:'Return to surface',desktop:'E — return to surface'};
+    if(p.underground)return null;
+    const home=nearestEntrance(p.x,p.z,'allied');
+    if(p.carrying&&home.entry&&home.distance<home.entry.radius+1.7)return{kind:'interact',label:'Deliver food',desktop:'E — deliver food'};
+    const food=this.sim.foods.find(f=>f.amount>0&&dist2(p.x,p.z,f.x,f.z)<3.3);
+    if(!p.carrying&&food)return{kind:'interact',label:`Collect ${food.type}`,desktop:`E — collect ${food.type}`};
+    if(home.entry&&home.distance<home.entry.radius+3.2)return{kind:'interact',label:'Enter colony',desktop:'E — enter underground colony'};
+    const climbable=FEATURES.climbing&&this.world.climbables.find(c=>dist2(p.x,p.z,c.x,c.z)<c.radius+1.1);
+    if(climbable)return{kind:'jump',label:`Climb ${climbable.type||'surface'}`,desktop:'Space — climb'};
+    const threats=[
+      ...this.sim.ants.filter(a=>a.alive&&a.species==='rival').map(entity=>({entity,reach:3.1,label:'Bite rival ant'})),
+      ...this.sim.flyers.filter(f=>f.type==='bee'&&f.stun<=0).map(entity=>({entity,reach:3.1,label:'Bite bee'})),
+      {entity:this.sim.spider,reach:19,label:'Bite spider'},
+    ];
+    let nearest=null,best=Infinity;
+    for(const threat of threats){const d=dist2(p.x,p.z,threat.entity.x,threat.entity.z);if(d<threat.reach&&d<best){nearest=threat;best=d;}}
+    return nearest?{kind:'attack',label:nearest.label,desktop:'Left click — bite'}:null;
+  }
   #hud(){const p=this.sim.player,w=this.state.weather,zone=this.sim.currentSafeZone(),spiderD=dist2(p.x,p.z,this.sim.spider.x,this.sim.spider.z),danger=zone?0:clamp((92-spiderD)/92*100,0,100),mission=this.sim.mission();document.querySelector('#stamina').style.width=`${p.stamina}%`;document.querySelector('#staminaN').textContent=Math.round(p.stamina);document.querySelector('#danger').style.width=`${danger}%`;document.querySelector('#dangerN').textContent=zone?'SAFE':Math.round(danger);document.querySelector('#allyScore').textContent=this.sim.stats.alliedDelivered+p.delivered;document.querySelector('#rivalScore').textContent=this.sim.stats.rivalDelivered;document.querySelector('#foodLeft').textContent=this.sim.foods.reduce((a,f)=>a+f.amount,0);document.querySelector('#missionTitle').textContent=mission.title;document.querySelector('#objectiveText').textContent=`${mission.text}${FEATURES.missions?` (${this.state.missionProgress}/${mission.goal})`:''}`;document.querySelector('#weatherLine').textContent=`Health ${Math.max(0,Math.round(p.health))} · ${w.label} · wind ${w.wind.toFixed(1)} · rain ${Math.round(w.rain*100)}%${p.underground?' · underground':''}`;const c=this.state.colony.allied;document.querySelector('#broodLine').textContent=FEATURES.lifecycle?`Health ${Math.round(c.health)} · eggs ${c.eggs} · larvae ${c.larvae} · pupae ${c.pupae}`:'Colony stable';document.querySelector('#networkBadge').textContent=FEATURES.multiplayer?`Network: ${this.state.network.status}`:'Multiplayer foundation';const safeEl=document.querySelector('#safeNotice');if(zone){safeEl.style.display='block';document.querySelector('#safeText').textContent=`${zone.name||'Underground colony'}. Predators cannot capture you here.`;}else safeEl.style.display='none';let prompt='';if(FEATURES.underground){if(p.underground&&Math.hypot(p.x,p.z)<5.5)prompt='E — return to surface';else{const entry=nearestEntrance(p.x,p.z,'allied');if(!p.underground&&entry.entry&&entry.distance<entry.entry.radius+3.2)prompt=entry.distance<entry.entry.radius*.72?'Entering underground…':'E — enter underground colony';}}if(!prompt&&!p.underground){const food=this.sim.foods.find(f=>f.amount>0&&dist2(p.x,p.z,f.x,f.z)<3.3);const home=nearestEntrance(p.x,p.z,'allied');if(!p.carrying&&food)prompt=`E — collect ${food.type}`;else if(p.carrying&&home.distance<home.entry.radius+1.7)prompt='E — deliver food';else if(FEATURES.climbing&&this.world.climbables.some(c=>dist2(p.x,p.z,c.x,c.z)<c.radius+1.1))prompt='Space — climb';else if(FEATURES.pheromones&&this.input.keys.has('KeyF'))prompt='E — lay recruitment pheromone';}const pe=document.querySelector('#prompt');pe.textContent=prompt;pe.style.opacity=prompt?1:0;const d=document.querySelector('#debug');d.style.display=this.state.debug?'block':'none';if(this.state.debug)d.textContent=`${BUILD.version}\nFPS ${this.fps||0}\nTick ${this.state.tick}\nPlayer ${p.x.toFixed(1)}, ${p.z.toFixed(1)}\nCamera ${this.state.cameraMode}\nSpider ${this.sim.spider.state} ${spiderD.toFixed(1)}m\nAnts ${this.sim.ants.filter(a=>a.alive).length}/${this.sim.ants.length}\nFlyers ${this.sim.flyers.length}\nPheromones ${this.sim.pheromones.length}\nGrass ${this.world.grass.count} · details ${this.world.detailInstanceCount||0} · plants ${this.world.plantInstanceCount||0}\nWeather ${w.phase}\nUnderground ${p.underground}\nNetwork ${this.state.network.status}\nActive chunk ${this.sim.chunks.centerCellX},${this.sim.chunks.centerCellZ}\nSlow systems ${(this.sim.scheduler.metrics().filter(x=>x.overBudget).map(x=>x.name+':'+x.averageMs+'ms').join(', ')||'none')}`;}
 
   #minimap(){if(!this.mapWrap||!this.mapCanvas)return;if(!this.mapCtx){this.mapWrap.dataset.status='unavailable';this.mapWrap.style.setProperty('display','block','important');return;}this.mapWrap.dataset.status='online';this.mapWrap.style.setProperty('display','block','important');const ctx=this.mapCtx,size=this.mapCanvas.width,center=size/2,radius=size*.46,p=this.sim.player,range=112,scale=radius/range;ctx.clearRect(0,0,size,size);ctx.save();ctx.beginPath();ctx.arc(center,center,radius,0,Math.PI*2);ctx.clip();ctx.fillStyle=p.underground?'#24170f':'#172416';ctx.fillRect(0,0,size,size);ctx.strokeStyle='rgba(211,229,186,.09)';ctx.lineWidth=1;for(let r=28;r<=84;r+=28){ctx.beginPath();ctx.arc(center,center,r*scale,0,Math.PI*2);ctx.stroke();}const point=(x,z)=>[center+(x-p.x)*scale,center+(z-p.z)*scale];for(const s of SHELTERS){const [x,y]=point(s.x,s.z);ctx.beginPath();ctx.arc(x,y,Math.max(2.4,s.radius*scale),0,Math.PI*2);ctx.fillStyle='rgba(124,232,255,.35)';ctx.fill();ctx.strokeStyle='#8deeff';ctx.lineWidth=1.5;ctx.stroke();}for(const e of ENTRANCES){const [x,y]=point(e.x,e.z);ctx.beginPath();ctx.arc(x,y,Math.max(2.5,e.radius*scale),0,Math.PI*2);ctx.fillStyle=e.species==='allied'?'rgba(114,242,160,.42)':'rgba(243,179,106,.38)';ctx.fill();ctx.strokeStyle=e.species==='allied'?'#72f2a0':'#f3b36a';ctx.lineWidth=1.5;ctx.stroke();}for(const f of this.sim.foods){if(f.amount<=0)continue;const [x,y]=point(f.x,f.z);if(Math.hypot(x-center,y-center)>radius)continue;ctx.fillStyle='#f0d56b';ctx.fillRect(x-1.5,y-1.5,3,3);}for(const a of this.sim.ants){if(!a.alive)continue;const [x,y]=point(a.x,a.z);if(Math.hypot(x-center,y-center)>radius)continue;ctx.fillStyle=a.species==='allied'?'#d7f1cc':'#d76b55';ctx.beginPath();ctx.arc(x,y,1.4,0,Math.PI*2);ctx.fill();}const [sx,sy]=point(this.sim.spider.x,this.sim.spider.z);if(Math.hypot(sx-center,sy-center)<radius){ctx.fillStyle='#ff5c49';ctx.beginPath();ctx.arc(sx,sy,4.2,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#ffd0c9';ctx.lineWidth=1;ctx.stroke();}ctx.translate(center,center);ctx.rotate(p.yaw+Math.PI/2);ctx.fillStyle='#ffffff';ctx.beginPath();ctx.moveTo(0,-8);ctx.lineTo(5,6);ctx.lineTo(0,3);ctx.lineTo(-5,6);ctx.closePath();ctx.fill();ctx.restore();ctx.beginPath();ctx.arc(center,center,radius,0,Math.PI*2);ctx.strokeStyle='rgba(183,240,195,.82)';ctx.lineWidth=3;ctx.stroke();}
@@ -688,8 +734,8 @@ class TouchControls {
     this.stickPointer=null;
     this.stick=root.querySelector('#moveStick');
     this.knob=root.querySelector('#moveKnob');
-    this.menu=root.querySelector('#behaviorMenu');
-    this.menuToggle=root.querySelector('#behaviorToggle');
+    this.contextButton=root.querySelector('#contextAction');
+    this.contextKind=null;
     const requested=new URLSearchParams(location.search).get('touch')==='1';
     const coarse=matchMedia?.('(pointer: coarse)')?.matches||navigator.maxTouchPoints>0;
     document.body.classList.toggle('touch-ui',Boolean(requested||coarse));
@@ -717,12 +763,13 @@ class TouchControls {
       if(this.stickPointer!==e.pointerId)return;
       const rect=this.stick.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2,max=rect.width*.32;
       let dx=e.clientX-cx,dy=e.clientY-cy;
-      const length=Math.hypot(dx,dy);
+      const length=Math.hypot(dx,dy),strength=Math.min(1,length/max);
       if(length>max){dx=dx/length*max;dy=dy/length*max;}
       const nx=dx/max,ny=dy/max,dead=.22;
       this.knob.style.transform=`translate3d(${dx}px,${dy}px,0)`;
       this.setKey('KeyA',nx<-dead);this.setKey('KeyD',nx>dead);
       this.setKey('KeyW',ny<-dead);this.setKey('KeyS',ny>dead);
+      this.setKey('ShiftLeft',strength>=.92);
     };
     const end=e=>{
       if(this.stickPointer!==e.pointerId)return;
@@ -744,7 +791,7 @@ class TouchControls {
   }
   resetJoystick() {
     if(this.knob)this.knob.style.transform='translate3d(0,0,0)';
-    for(const code of ['KeyW','KeyA','KeyS','KeyD'])this.setKey(code,false);
+    for(const code of ['KeyW','KeyA','KeyS','KeyD','ShiftLeft'])this.setKey(code,false);
   }
   bindHold(id,onStart,onEnd) {
     const button=this.root.querySelector(id);
@@ -760,27 +807,25 @@ class TouchControls {
   queue(name) {
     if(this.input)this.input[name]=true;
   }
+  setContext(action) {
+    if(!this.contextButton)return;
+    this.contextKind=action?.kind||null;
+    this.contextButton.textContent=action?.label||'';
+    this.contextButton.dataset.kind=this.contextKind||'';
+    this.contextButton.setAttribute('aria-label',action?.label||'Context action');
+    this.contextButton.classList.toggle('visible',Boolean(action));
+  }
   bindButtons() {
-    this.bindHold('#touchAttack',()=>this.queue('attackQueued'));
-    this.bindHold('#touchSprint',()=>this.setKey('ShiftLeft',true),()=>this.setKey('ShiftLeft',false));
-    this.bindHold('#touchInteract',()=>this.queue('interactQueued'));
-    this.bindHold('#touchSense',()=>this.setKey('KeyF',true),()=>this.setKey('KeyF',false));
-    this.bindHold('#touchClimb',()=>this.queue('jumpQueued'));
-    this.bindHold('#touchCamera',()=>{
-      if(!this.input)return;
-      const now=performance.now();
-      if(now-this.input.cameraToggleAt>300){this.input.toggleCamera=true;this.input.cameraToggleAt=now;}
-    });
-    this.bindHold('#touchMute',()=>this.queue('toggleMute'));
-    this.bindHold('#touchNetwork',()=>this.queue('toggleNetwork'));
-    this.menuToggle?.addEventListener('click',e=>{
+    this.contextButton?.addEventListener('pointerdown',e=>{
       e.preventDefault();e.stopPropagation();
-      const open=!this.menu?.classList.contains('open');
-      this.menu?.classList.toggle('open',open);
-      document.body.classList.toggle('touch-menu-open',open);
-      this.menuToggle.setAttribute('aria-expanded',String(open));
-      this.menuToggle.textContent=open?'Close':'More';
+      if(this.contextKind==='attack')this.queue('attackQueued');
+      else if(this.contextKind==='jump')this.queue('jumpQueued');
+      else if(this.contextKind==='interact')this.queue('interactQueued');
+      this.contextButton.classList.add('active');
     });
+    const release=()=>this.contextButton?.classList.remove('active');
+    this.contextButton?.addEventListener('pointerup',release);
+    this.contextButton?.addEventListener('pointercancel',release);
   }
 }
 
@@ -800,13 +845,33 @@ function runMultiTouchSelfTest(input) {
   fire(stick,'pointerdown',701,rect.left+rect.width/2,rect.top+rect.height*.15);
   fire(canvas,'pointerdown',702,innerWidth*.55,innerHeight*.5);
   fire(canvas,'pointermove',702,innerWidth*.65,innerHeight*.43);
-  const simultaneous=input.keys.has('KeyW')&&input.yaw!==beforeYaw&&input.touchLookPointer===702;
+  const autoSprint=input.keys.has('ShiftLeft');
+  const simultaneous=input.keys.has('KeyW')&&autoSprint&&input.yaw!==beforeYaw&&input.touchLookPointer===702;
   fire(canvas,'pointerup',702,innerWidth*.65,innerHeight*.43);
   const movementSurvivesLookRelease=input.keys.has('KeyW')&&input.touchLookPointer===null;
   fire(stick,'pointerup',701,rect.left+rect.width/2,rect.top+rect.height*.15);
-  const joystickReleased=!input.keys.has('KeyW')&&touchControls.stickPointer===null;
+  const joystickReleased=!input.keys.has('KeyW')&&!input.keys.has('ShiftLeft')&&touchControls.stickPointer===null;
   input.yaw=beforeYaw;input.pitch=beforePitch;
-  return{ok:simultaneous&&movementSurvivesLookRelease&&joystickReleased,simultaneous,movementSurvivesLookRelease,joystickReleased};
+  return{ok:simultaneous&&movementSurvivesLookRelease&&joystickReleased,autoSprint,simultaneous,movementSurvivesLookRelease,joystickReleased};
+}
+
+function runInterfaceSelfTest(game) {
+  const inputResult=runMultiTouchSelfTest(game.input),p=game.sim.player,button=qs('#contextAction');
+  const saved={x:p.x,z:p.z,speed:p.speed,stamina:p.stamina};
+  const food=game.sim.foods.find(f=>f.amount>0&&Math.hypot(f.x,f.z)>80)||game.sim.foods.find(f=>f.amount>0);
+  p.x=food.x;p.z=food.z;p.speed=0;p.stamina=50;game.refreshUi();
+  const contextVisible=button.classList.contains('visible')&&button.dataset.kind==='interact'&&button.textContent.startsWith('Collect');
+  button.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch',pointerId:703,clientX:innerWidth/2,clientY:innerHeight*.8}));
+  const contextQueued=game.input.command().interact;
+  button.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,cancelable:true,pointerType:'touch',pointerId:703,clientX:innerWidth/2,clientY:innerHeight*.8}));
+  const lowStaminaVisible=document.body.classList.contains('low-stamina');
+  p.speed=3;game.refreshUi();
+  const motionHidesHud=document.body.classList.contains('ui-in-motion');
+  p.stamina=100;game.refreshUi();
+  const fullStaminaHidden=!document.body.classList.contains('low-stamina');
+  Object.assign(p,saved);game.refreshUi();
+  const largerWorld=WORLD.radius===150&&game.sim.foods.some(f=>Math.hypot(f.x,f.z)>120);
+  return{...inputResult,contextVisible,contextQueued,lowStaminaVisible,motionHidesHud,fullStaminaHidden,largerWorld,ok:inputResult.ok&&contextVisible&&contextQueued&&lowStaminaVisible&&motionHidesHud&&fullStaminaHidden&&largerWorld};
 }
 
 function showFatal(title, detail) {
@@ -856,12 +921,13 @@ async function startGame() {
     game = new Game(quality);window.ANTBOUND_GAME=game;touchControls.attach(game.input);
     qs('#overlay').style.display = 'none';
     game.start();
-    if(new URLSearchParams(location.search).get('selftest')==='multitouch'){
-      const result=runMultiTouchSelfTest(game.input);
+    const selftest=new URLSearchParams(location.search).get('selftest');
+    if(selftest==='multitouch'||selftest==='interface'){
+      const result=selftest==='interface'?runInterfaceSelfTest(game):runMultiTouchSelfTest(game.input);
       window.ANTBOUND_SELFTEST=result;
-      qs('#runtimeStatus').textContent=result.ok?'v0.20.4 multi-touch self-test passed':'v0.20.4 multi-touch self-test failed';
-      console.info('ANTBOUND multi-touch self-test',result);
-      if(!result.ok)throw new Error(`Multi-touch self-test failed: ${JSON.stringify(result)}`);
+      qs('#runtimeStatus').textContent=result.ok?`v0.21.0 ${selftest} self-test passed`:`v0.21.0 ${selftest} self-test failed`;
+      console.info(`ANTBOUND ${selftest} self-test`,result);
+      if(!result.ok)throw new Error(`${selftest} self-test failed: ${JSON.stringify(result)}`);
     }
   } catch (error) {
     console.error('ANTBOUND startup failed', error);
